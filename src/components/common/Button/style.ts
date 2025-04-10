@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { ButtonTheme } from "./Button.types";
+import { ButtonTheme } from "./interface.ts";
 
 export const ButtonWrapper = styled.button<{
   themeStyle: ButtonTheme;

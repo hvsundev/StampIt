@@ -1,8 +1,9 @@
 import styled from "@emotion/styled";
 
-export const Wrapper = styled.div`
+export const PDFViewerWrapper = styled.div`
   position: relative;
   display: flex;
+  flex: 0 0 280px;
   justify-content: center;
   align-items: center;
   height: 100%;

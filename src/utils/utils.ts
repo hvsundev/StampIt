@@ -4,7 +4,7 @@ import workerSrc from "pdfjs-dist/build/pdf.worker?url";
 pdfjsLib.GlobalWorkerOptions.workerSrc = workerSrc;
 
 export const pdfFileToImage = async (
-  file: File
+  file: File,
 ): Promise<{
   image: string;
   error: string | null;
@@ -15,8 +15,8 @@ export const pdfFileToImage = async (
   const pdf = await pdfjsLib.getDocument(pdfUrl).promise;
 
   const renderPageToImage = async (): Promise<string> => {
-    const page = await pdf.getPage(0);
-    const viewport = page.getViewport({ scale: 5 });
+    const page = await pdf.getPage(1);
+    const viewport = page.getViewport({ scale: 1 });
 
     const canvas = document.createElement("canvas");
     const context = canvas.getContext("2d");
@@ -37,7 +37,7 @@ export const pdfFileToImage = async (
 };
 
 export const getImageByFile = async (
-  file: File
+  file: File,
 ): Promise<string | undefined> => {
   const result = await pdfFileToImage(file);
 

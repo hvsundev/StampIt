@@ -3,18 +3,19 @@ import { useStore } from "@/store/store.ts";
 
 import "./C.css";
 import { getImageByFile } from "@/utils/utils.ts";
+import { usePDF } from "@/context/usePDFContext";
 
 const C = () => {
-  const { file } = useStore();
+  const { PDFFile } = usePDF();
   const [fileImage, setFileImage] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!file) return;
+    if (!PDFFile) return;
 
     (async () => {
-      setFileImage((await getImageByFile(file)) ?? "");
+      setFileImage((await getImageByFile(PDFFile)) ?? "");
     })();
-  }, [file]);
+  }, [PDFFile]);
 
   return (
     <div className="C">
