@@ -1,22 +1,22 @@
 import { ReactNode } from "react";
 import * as S from "@/components/layout/styles.tsx";
 
-type LayoutProps = {
+interface LayoutProps {
   children: {
     fileUploader: ReactNode;
-    pdfViewer: ReactNode;
-    c: ReactNode;
+    PDFViewer: ReactNode;
+    PDFPreview: ReactNode;
   };
-};
+}
 
 const Layout = ({ children }: LayoutProps) => {
-  const { fileUploader, pdfViewer, c } = children;
+  const { fileUploader, PDFViewer, PDFPreview } = children;
 
   return (
     <S.Container>
       <S.FileUploaderWrapper>{fileUploader}</S.FileUploaderWrapper>
-      <S.PDFViewerWrapper>{pdfViewer}</S.PDFViewerWrapper>
-      <S.CWrapper>{c}</S.CWrapper>
+      <S.PDFViewerWrapper>{PDFViewer}</S.PDFViewerWrapper>
+      <S.PDFPreviewWrapper>{PDFPreview}</S.PDFPreviewWrapper>
     </S.Container>
   );
 };

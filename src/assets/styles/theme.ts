@@ -1,6 +1,7 @@
 const colors = {
-  // white: "#e9e9e9",
-  white: "rgba(233,233,233,0.11)",
+  white: "#fff",
+  gray: "#e9e9e9",
+  deepGray: "#e1e1e1",
 };
 
 const theme = {

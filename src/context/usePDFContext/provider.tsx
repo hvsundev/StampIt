@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PDFContext from "@/context/usePDFContext/context.ts";
 import { Stamp } from "@/context/usePDFContext/interface.ts";
+import ExamplePDF from "@/assets/team-reboott.pdf";
 
 export const PDFProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -26,9 +27,17 @@ export const PDFProvider: React.FC<{ children: React.ReactNode }> = ({
     setStamps([]);
   };
 
+  // TODO: PDF 업로드 로직 추가 필요
   useEffect(() => {
-    console.log(PDFFile);
-  }, [PDFFile]);
+    const fetchPDF = async () => {
+      const res = await fetch(ExamplePDF);
+      const blob = await res.blob();
+      const file = new File([blob], "team-reboott.pdf", { type: blob.type });
+      setPDFFile(file);
+    };
+
+    fetchPDF();
+  }, []);
 
   return (
     <PDFContext.Provider

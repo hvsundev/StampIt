@@ -1,9 +1,8 @@
 import Layout from "@/components/layout";
 import FileUploader from "@/features/FileUploader";
 import PDFViewer from "@/features/PDFViewer";
-import Index from "@/features/C";
+import PDFPreview from "@/features/PDFPreview";
 
-import "./App.css";
 import { PDFProvider } from "@/context/usePDFContext/provider.tsx";
 import { ThemeProvider } from "@emotion/react";
 import theme from "@/assets/styles/theme.ts";
@@ -15,8 +14,8 @@ function App() {
         <Layout
           children={{
             fileUploader: <FileUploader />,
-            pdfViewer: <PDFViewer />,
-            c: <Index />,
+            PDFViewer: <PDFViewer />,
+            PDFPreview: <PDFPreview />,
           }}
         />
       </PDFProvider>
