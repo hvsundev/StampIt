@@ -8,8 +8,9 @@ export const ViewerController = styled.div`
   width: 100%;
   height: 48px;
   background-color: ${({ theme }) => theme.colors.white};
+`;
 
-  span {
-    font-size: 16px;
-  }
+export const FileName = styled.span`
+  font-size: 16px;
+  font-weight: 700;
 `;

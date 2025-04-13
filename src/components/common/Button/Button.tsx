@@ -1,5 +1,5 @@
 import React from "react";
-import { ButtonProps, ButtonTheme } from "./interface.ts";
+import { ButtonProps, ButtonSize, ButtonTheme } from "./interface.ts";
 import { ButtonWrapper } from "./style.ts";
 
 const Button: React.FC<ButtonProps> = ({
@@ -7,9 +7,11 @@ const Button: React.FC<ButtonProps> = ({
   label,
   type = "button",
   theme = ButtonTheme.Primary,
+  size = ButtonSize.Medium,
   rounded = true,
   disabled = false,
   loading = false,
+  leftIcon,
 }: ButtonProps) => {
   if (loading) return "로딩 중...";
 
@@ -20,8 +22,16 @@ const Button: React.FC<ButtonProps> = ({
       disabled={disabled || loading}
       themeStyle={theme}
       rounded={rounded}
+      size={size}
     >
-      {label}
+      {leftIcon && (
+        <img
+          src={leftIcon}
+          alt=""
+          style={{ marginRight: 6, width: 16, height: 16 }}
+        />
+      )}
+      <span>{label}</span>
     </ButtonWrapper>
   );
 };

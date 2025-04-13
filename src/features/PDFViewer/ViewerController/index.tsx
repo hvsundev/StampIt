@@ -3,6 +3,8 @@ import { usePDF } from "@/context/usePDFContext";
 import Button from "@/components/common/Button/Button.tsx";
 import { PDFDocument } from "pdf-lib";
 import * as fabric from "fabric";
+import downloadIcon from "@/assets/images/download.svg";
+import { ButtonSize } from "@/components/common/Button/interface.ts";
 
 interface ViewerControllerProps {
   canvasRefs: React.MutableRefObject<fabric.Canvas[]>;
@@ -32,11 +34,13 @@ const ViewerController = ({ canvasRefs }: ViewerControllerProps) => {
 
   return (
     <S.ViewerController>
-      <span>{PDFFile?.name}</span>
+      <S.FileName>{PDFFile?.name}</S.FileName>
       <Button
         label="PDF 다운로드"
+        size={ButtonSize.Large}
         onClick={handlePDFDownload}
         rounded={false}
+        leftIcon={downloadIcon}
       />
     </S.ViewerController>
   );

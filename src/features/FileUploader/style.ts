@@ -1,24 +1,35 @@
 import styled from "@emotion/styled";
+import { css } from "@emotion/react";
 
 export const FileUploaderWrapper = styled.div`
   display: flex;
   height: 100%;
   flex-direction: column;
-  justify-content: space-between;
   background-color: ${({ theme }) => theme.colors.white};
 `;
 
 export const FileUploaderSection = styled.div`
-  height: 50%;
   padding: 24px 30px;
 `;
 
-export const FileUploaderTop = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+export const FileUploaderHeader = styled.div`
+  padding: 24px 30px;
+
+  h1 {
+    font-size: 24px;
+    letter-spacing: -0.3px;
+    color: ${({ theme }) => theme.colors.primary};
+  }
+
+  img {
+    width: 100px;
+  }
 `;
 
+export const FileUploaderContent = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 export const Uploader = styled.div``;
 
 export const UploadHeader = styled.div`
@@ -34,11 +45,66 @@ export const UploadContent = styled.div`
   gap: 8px;
 `;
 
-export const PDFFile = styled.div``;
+export const DropArea = styled.div<{ isExistFile: boolean }>`
+  position: relative;
+  height: 80px;
+  padding: 0 16px;
+  border: 1px dashed #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  transition:
+    border-color 0.2s,
+    background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  letter-spacing: -0.3px;
+
+  /* 🔵 기본 hover */
+  &:hover {
+    border-color: #1d5aff;
+  }
+
+  ${({ isExistFile, theme }) =>
+    isExistFile &&
+    css`
+      border-style: solid;
+      font-size: 16px;
+      font-weight: 500;
+      padding: 0 24px;
+      justify-content: space-between;
+
+      &:hover {
+        border-color: #1d5aff;
+        background-color: ${theme.colors.paleGray};
+
+        &::after {
+          position: absolute;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          top: -5px;
+          right: -2px;
+          content: "X";
+          background-color: black;
+          width: 20px;
+          height: 20px;
+          color: #fff;
+          border-radius: 50%;
+        }
+      }
+    `}
+`;
 
 export const File = styled.div`
+  cursor: pointer;
   display: flex;
   justify-content: space-between;
+  transition: 0.2s;
+  padding: 8px 12px;
+  border-radius: 10px;
 `;
 
 export const UploadTitle = styled.div`
@@ -72,7 +138,7 @@ export const Stamps = styled.div`
   min-height: 54px;
 `;
 
-export const Descrition = styled.span`
+export const Description = styled.span`
   font-size: 12px;
   color: ${({ theme }) => theme.colors.deepGray};
 `;
@@ -89,23 +155,24 @@ export const Count = styled.span`
 
 export const StampImage = styled.img<{
   isSelected: boolean;
+  isEmpty: boolean;
 }>`
-  cursor: pointer;
   width: 70px;
   height: 70px;
   object-fit: contain;
   border-radius: 8px;
   border: ${({ isSelected }) =>
     isSelected ? "2px solid #3b82f6" : `1px solid #e4e4e4`};
-  background-color: ${({ theme }) => theme.colors.paleGray};
-`;
+  // background-color: ${({ theme }) => theme.colors.paleGray};
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
 
-export const RemoveButton = styled.div`
-  button {
-    padding: 4px 8px;
-    border-radius: 12px;
-    background-color: transparent;
-    color: #5e5e5e;
-    font-size: 16px;
+  &:hover {
+    cursor: ${({ isEmpty }) => (isEmpty ? "unset" : "pointer")};
   }
 `;
+
+export const RemoveButton = styled.div``;

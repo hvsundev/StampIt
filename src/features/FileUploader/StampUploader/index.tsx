@@ -2,6 +2,7 @@ import * as S from "@/features/FileUploader/style.ts";
 import Button from "@/components/common/Button/Button.tsx";
 import React, { useRef } from "react";
 import { usePDF } from "@/context/usePDFContext";
+import { Description } from "@/features/FileUploader/style.ts";
 
 const IMAGE_UPLOAD_LIMIT = 5;
 
@@ -34,7 +35,7 @@ const StampUploader = () => {
         <S.UploadHeader>
           <S.UploadTitle>
             <S.StepNumbering>2</S.StepNumbering>
-            <S.Title>도장 이미지 업로드</S.Title>
+            <S.Title>도장 이미지</S.Title>
           </S.UploadTitle>
           <input
             ref={stampInputRef}
@@ -59,10 +60,11 @@ const StampUploader = () => {
                   stamps[imageIndex] ? setSelectedStampIndex(imageIndex) : null
                 }
                 isSelected={selectedStampIndex === imageIndex}
+                isEmpty={!stamps[imageIndex]}
               />
             ))}
           </S.Stamps>
-          <S.Descrition>* 확장자는 'png'로 제한됩니다.</S.Descrition>
+          <S.Description>* 확장자는 'png'로 제한됩니다.</S.Description>
           <S.Count>
             <span>{`${stamps.length}`}</span>
             {`/${IMAGE_UPLOAD_LIMIT}`}

@@ -1,15 +1,23 @@
 export enum ButtonTheme {
-  Primary = "Primary",
-  Secondary = "Secondary",
-  Line = "Line",
+  Primary = "primary",
+  Secondary = "secondary",
+  Line = "line",
+}
+
+export enum ButtonSize {
+  Small = "Small",
+  Medium = "Medium",
+  Large = "Large",
 }
 
 export interface ButtonProps {
-  label: string;
   onClick?: () => void;
+  label: string;
   type?: "button" | "submit" | "reset";
   theme?: ButtonTheme;
+  size?: ButtonSize;
   rounded?: boolean;
   disabled?: boolean;
   loading?: boolean;
+  leftIcon?: string;
 }

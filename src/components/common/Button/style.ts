@@ -1,21 +1,40 @@
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
-import { ButtonTheme } from "./interface.ts";
+import { ButtonTheme, ButtonSize } from "./interface.ts";
 
 export const ButtonWrapper = styled.button<{
   themeStyle: ButtonTheme;
   disabled?: boolean;
   rounded?: boolean;
-}>(({ themeStyle, disabled, rounded }) => {
+  size?: ButtonSize;
+}>(({ themeStyle, disabled, rounded, size = ButtonSize.Medium }) => {
+  const sizeStyles = {
+    [ButtonSize.Small]: css`
+      font-size: 12px;
+      padding: 6px 12px;
+    `,
+    [ButtonSize.Medium]: css`
+      font-size: 14px;
+      padding: 8px 16px;
+    `,
+    [ButtonSize.Large]: css`
+      font-size: 16px;
+      padding: 12px 20px;
+    `,
+  };
+
   const base = css`
-    padding: 0.5rem 1rem;
-    border-radius: ${rounded ? "0.5rem" : 0};
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: ${rounded ? "8px" : "0"};
     transition: all 0.2s ease;
     cursor: ${disabled ? "not-allowed" : "pointer"};
     opacity: ${disabled ? 0.5 : 1};
     ${disabled && "pointer-events: none"};
     height: 100%;
     font-weight: 700;
+    ${sizeStyles[size]}
   `;
 
   const themeStyles = {
@@ -54,5 +73,5 @@ export const ButtonWrapper = styled.button<{
     `,
   };
 
-  return [base, themeStyles[themeStyle as ButtonTheme]];
+  return [base, themeStyles[themeStyle]];
 });
