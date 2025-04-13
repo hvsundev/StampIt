@@ -25,6 +25,12 @@ export const PDFProvider: React.FC<{ children: React.ReactNode }> = ({
     setStamps([]);
   };
 
+  const handleInitialize = () => {
+    setPDFFile(null);
+    setSelectedPDFIndex(-1);
+    setSelectedStampIndex(-1);
+  };
+
   return (
     <PDFContext.Provider
       value={{
@@ -39,6 +45,7 @@ export const PDFProvider: React.FC<{ children: React.ReactNode }> = ({
         setSelectedStampIndex,
         selectedPDFIndex,
         setSelectedPDFIndex,
+        handleInitialize,
       }}
     >
       {children}

@@ -12,4 +12,5 @@ export interface PDFContextType {
   setSelectedStampIndex: (index: number) => void;
   selectedPDFIndex: number;
   setSelectedPDFIndex: (index: number) => void;
+  handleInitialize: () => void;
 }

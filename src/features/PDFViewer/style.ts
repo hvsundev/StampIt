@@ -48,6 +48,8 @@ export const CanvasWrapper = styled.div`
 export const Canvas = styled.div`
   width: 100%;
   height: 100%;
+  display: flex;
+  justify-content: center;
 `;
 
 export const FloatingButtonArea = styled.div`

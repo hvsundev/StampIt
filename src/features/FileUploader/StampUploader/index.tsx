@@ -34,7 +34,7 @@ const StampUploader = () => {
         <S.UploadHeader>
           <S.UploadTitle>
             <S.StepNumbering>2</S.StepNumbering>
-            <S.Title>도장 파일 업로드</S.Title>
+            <S.Title>도장 이미지 업로드</S.Title>
           </S.UploadTitle>
           <input
             ref={stampInputRef}
@@ -55,7 +55,9 @@ const StampUploader = () => {
               <S.StampImage
                 key={imageIndex}
                 src={stamps[imageIndex]}
-                onClick={() => setSelectedStampIndex(imageIndex)}
+                onClick={() =>
+                  stamps[imageIndex] ? setSelectedStampIndex(imageIndex) : null
+                }
                 isSelected={selectedStampIndex === imageIndex}
               />
             ))}

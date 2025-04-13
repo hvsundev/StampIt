@@ -8,7 +8,10 @@ const PDFPreview = () => {
   const [fileImages, setFileImages] = useState<string[] | null>(null);
 
   useEffect(() => {
-    if (!PDFFile) return;
+    if (!PDFFile) {
+      setFileImages(null);
+      return;
+    }
 
     (async () => {
       const image = await getImagesByFile(PDFFile);

@@ -31,6 +31,7 @@ export const UploadContent = styled.div`
   display: flex;
   flex-flow: wrap;
   flex-direction: column;
+  gap: 8px;
 `;
 
 export const PDFFile = styled.div``;
@@ -95,8 +96,8 @@ export const StampImage = styled.img<{
   object-fit: contain;
   border-radius: 8px;
   border: ${({ isSelected }) =>
-    isSelected ? "2px solid red" : `1px solid #e4e4e4`};
-  background-color: ${({ theme }) => theme.colors.gray};
+    isSelected ? "2px solid #3b82f6" : `1px solid #e4e4e4`};
+  background-color: ${({ theme }) => theme.colors.paleGray};
 `;
 
 export const RemoveButton = styled.div`

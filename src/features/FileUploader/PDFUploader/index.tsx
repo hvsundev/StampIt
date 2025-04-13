@@ -6,7 +6,7 @@ import { usePDF } from "@/context/usePDFContext";
 const PDF_UPLOAD_LIMIT = 1;
 
 const PDFUploader = () => {
-  const { PDFFile, setPDFFile } = usePDF();
+  const { PDFFile, setPDFFile, handleInitialize } = usePDF();
   const pdfInputRef = useRef<HTMLInputElement>(null);
 
   const handlePDFUpload = () => {
@@ -20,7 +20,9 @@ const PDFUploader = () => {
   };
 
   const handlePDFRemove = () => {
-    setPDFFile(null);
+    alert("지금까지 편집한 내용이 사라지는데 진짜 삭제할거야?");
+
+    handleInitialize();
   };
 
   return (
@@ -29,7 +31,7 @@ const PDFUploader = () => {
         <S.UploadHeader>
           <S.UploadTitle>
             <S.StepNumbering>1</S.StepNumbering>
-            <S.Title>PDF 파일 업로드</S.Title>
+            <S.Title>PDF 업로드</S.Title>
           </S.UploadTitle>
           <input
             ref={pdfInputRef}
@@ -37,7 +39,11 @@ const PDFUploader = () => {
             onChange={handlePDFChange}
             style={{ display: "none" }}
           />
-          <Button label={"업로드"} onClick={handlePDFUpload} />
+          <Button
+            label={"업로드"}
+            onClick={handlePDFUpload}
+            disabled={!!PDFFile}
+          />
         </S.UploadHeader>
         <S.UploadContent>
           {PDFFile ? (

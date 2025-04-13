@@ -15,7 +15,13 @@ const FABRIC_CANVAS_HEIGHT = parseFloat(
 );
 
 const PDFViewer = () => {
-  const { PDFFile, selectedPDFIndex, stamps, selectedStampIndex } = usePDF();
+  const {
+    PDFFile,
+    selectedPDFIndex,
+    stamps,
+    selectedStampIndex,
+    handleInitialize,
+  } = usePDF();
   const canvasContainerRef = useRef<HTMLDivElement>(null);
   const canvasRefs = useRef<fabric.Canvas[]>([]);
 
@@ -92,7 +98,16 @@ const PDFViewer = () => {
   };
 
   useEffect(() => {
-    if (!PDFFile) return;
+    if (!PDFFile) {
+      canvasRefs.current = [];
+
+      if (canvasContainerRef.current) {
+        canvasContainerRef.current.innerHTML = "";
+      }
+
+      handleInitialize();
+      return;
+    }
 
     (async () => {
       const images = await getImagesByFile(PDFFile);
@@ -119,12 +134,18 @@ const PDFViewer = () => {
           const image = new Image();
           image.crossOrigin = "anonymous";
           image.onload = () => {
-            resolve(
-              new fabric.Image(image, {
-                selectable: false,
-                evented: false,
-              }),
-            );
+            const fabricImg = new fabric.Image(image, {
+              selectable: false,
+              evented: false,
+            });
+
+            // 🎯 비율 유지하면서 캔버스 크기에 맞추기
+            const scaleX = rawCanvas.width / fabricImg.width!;
+            const scaleY = rawCanvas.height / fabricImg.height!;
+            const scale = Math.min(scaleX, scaleY); // 비율 유지
+
+            fabricImg.scale(scale); // 이미지 크기 조절
+            resolve(fabricImg);
           };
           image.src = images[i];
         });
