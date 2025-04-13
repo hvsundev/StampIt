@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import * as fabric from "fabric";
-import { PDFDocument } from "pdf-lib";
 
 import { getImagesByFile } from "@/utils/utils.ts";
 import * as S from "./style.ts";
@@ -8,11 +7,7 @@ import Button from "@/components/common/Button/Button.tsx";
 import { usePDF } from "@/context/usePDFContext";
 import { ButtonTheme } from "@/components/common/Button/interface.ts";
 import PDFPreview from "@/features/PDFViewer/PDFPreview";
-
-const FABRIC_CANVAS_WIDTH = 500;
-const FABRIC_CANVAS_HEIGHT = parseFloat(
-  (FABRIC_CANVAS_WIDTH * Math.sqrt(2)).toFixed(2),
-);
+import ViewerController from "@/features/PDFViewer/ViewerController";
 
 const PDFViewer = () => {
   const {
@@ -22,14 +17,16 @@ const PDFViewer = () => {
     selectedStampIndex,
     handleInitialize,
   } = usePDF();
+  const canvasRef = useRef<HTMLDivElement>(null);
   const canvasContainerRef = useRef<HTMLDivElement>(null);
   const canvasRefs = useRef<fabric.Canvas[]>([]);
 
   const [pdfPages, setPdfPages] = useState<string[]>([]);
-
-  const activeCanvas = useMemo(() => {
-    return canvasRefs.current[selectedPDFIndex];
-  }, [selectedPDFIndex]);
+  const [canvasSize, setCanvasSize] = useState({
+    FABRIC_CANVAS_WIDTH: 0,
+    FABRIC_CANVAS_HEIGHT: 0,
+  });
+  const [isExistActiveStamp, setIsExistActiveStamp] = useState(false);
 
   const mountCanvas = (container: HTMLDivElement, canvas: fabric.Canvas) => {
     container.innerHTML = "";
@@ -40,26 +37,30 @@ const PDFViewer = () => {
   const createDeleteHandler = (canvas: fabric.Canvas) => {
     return (e: KeyboardEvent) => {
       if (e.key === "Delete" || e.key === "Backspace") {
-        const activeObj = canvas.getActiveObject();
-        if (activeObj) {
-          canvas.remove(activeObj);
+        const activeStamp = canvas.getActiveObject();
+        if (activeStamp) {
+          canvas.remove(activeStamp);
           canvas.discardActiveObject();
           canvas.requestRenderAll();
+          setIsExistActiveStamp(false);
         }
       }
     };
   };
 
   const handleStampDelete = () => {
-    const activeObj = activeCanvas.getActiveObject();
-    if (activeObj) {
-      activeCanvas.remove(activeObj);
+    const activeCanvas = canvasRefs.current[selectedPDFIndex];
+    const activeStamp = activeCanvas.getActiveObject();
+    if (activeStamp) {
+      activeCanvas.remove(activeStamp);
       activeCanvas.discardActiveObject();
       activeCanvas.requestRenderAll();
+      setIsExistActiveStamp(false);
     }
   };
 
   const handleStampDraw = () => {
+    const activeCanvas = canvasRefs.current[selectedPDFIndex];
     const img = new Image();
     img.crossOrigin = "anonymous";
     img.onload = () => {
@@ -75,34 +76,14 @@ const PDFViewer = () => {
       activeCanvas.requestRenderAll();
     };
     img.src = stamps[selectedStampIndex];
-    console.log(stamps[selectedStampIndex]);
-  };
-
-  const handlePDFDownload = async () => {
-    const doc = await PDFDocument.create();
-
-    for (const canvas of canvasRefs.current) {
-      const dataUrl = canvas.toDataURL();
-      const png = await fetch(dataUrl).then((res) => res.arrayBuffer());
-      const img = await doc.embedPng(png);
-      const page = doc.addPage([img.width, img.height]);
-      page.drawImage(img, { x: 0, y: 0, width: img.width, height: img.height });
-    }
-
-    const pdfBytes = await doc.save();
-    const blob = new Blob([pdfBytes], { type: "application/pdf" });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = "stamped.pdf";
-    link.click();
   };
 
   useEffect(() => {
     if (!PDFFile) {
       canvasRefs.current = [];
 
-      if (canvasContainerRef.current) {
-        canvasContainerRef.current.innerHTML = "";
+      if (canvasRef.current) {
+        canvasRef.current.innerHTML = "";
       }
 
       handleInitialize();
@@ -117,12 +98,12 @@ const PDFViewer = () => {
 
       for (let i = 0; i < images.length; i++) {
         const rawCanvas = document.createElement("canvas");
-        rawCanvas.width = FABRIC_CANVAS_WIDTH;
-        rawCanvas.height = FABRIC_CANVAS_HEIGHT;
+        rawCanvas.width = canvasSize.FABRIC_CANVAS_WIDTH;
+        rawCanvas.height = canvasSize.FABRIC_CANVAS_HEIGHT;
 
-        if (i === 0 && canvasContainerRef.current) {
-          canvasContainerRef.current.innerHTML = "";
-          canvasContainerRef.current.appendChild(rawCanvas);
+        if (i === 0 && canvasRef.current) {
+          canvasRef.current.innerHTML = "";
+          canvasRef.current.appendChild(rawCanvas);
         }
 
         const fabricCanvas = new fabric.Canvas(rawCanvas, {
@@ -133,20 +114,27 @@ const PDFViewer = () => {
         const bgImage = await new Promise<fabric.Image>((resolve) => {
           const image = new Image();
           image.crossOrigin = "anonymous";
+
           image.onload = () => {
+            const imgWidth = image.width;
+            const imgHeight = image.height;
+
+            const scaleX = canvasSize.FABRIC_CANVAS_WIDTH / imgWidth;
+            const scaleY = canvasSize.FABRIC_CANVAS_HEIGHT / imgHeight;
+            const scale = Math.min(scaleX, scaleY);
+
             const fabricImg = new fabric.Image(image, {
+              left: 0,
+              top: 0,
+              scaleX: scale,
+              scaleY: scale,
               selectable: false,
               evented: false,
             });
 
-            // 🎯 비율 유지하면서 캔버스 크기에 맞추기
-            const scaleX = rawCanvas.width / fabricImg.width!;
-            const scaleY = rawCanvas.height / fabricImg.height!;
-            const scale = Math.min(scaleX, scaleY); // 비율 유지
-
-            fabricImg.scale(scale); // 이미지 크기 조절
             resolve(fabricImg);
           };
+
           image.src = images[i];
         });
 
@@ -161,46 +149,69 @@ const PDFViewer = () => {
   }, [PDFFile]);
 
   useEffect(() => {
-    const container = canvasContainerRef.current;
+    const activeCanvas = canvasRefs.current[selectedPDFIndex];
+    const container = canvasRef.current;
 
     if (!container || !activeCanvas) return;
 
     mountCanvas(container, activeCanvas);
     const handleKeyDown = createDeleteHandler(activeCanvas);
 
+    const handleSelectionChange = () => {
+      const activeObj = activeCanvas.getActiveObject();
+      setIsExistActiveStamp(!!activeObj);
+    };
+
+    activeCanvas.on("selection:created", handleSelectionChange);
+    activeCanvas.on("selection:updated", handleSelectionChange);
+    activeCanvas.on("selection:cleared", () => {
+      setIsExistActiveStamp(false);
+    });
+
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      activeCanvas.off("selection:created", handleSelectionChange);
+      activeCanvas.off("selection:updated", handleSelectionChange);
+      activeCanvas.off("selection:cleared");
+    };
   }, [selectedPDFIndex]);
+
+  useEffect(() => {
+    if (!canvasContainerRef.current) return;
+
+    const height = canvasContainerRef.current.clientHeight;
+    const width = height / Math.sqrt(2);
+
+    setCanvasSize({
+      FABRIC_CANVAS_WIDTH: parseFloat(width.toFixed(2)),
+      FABRIC_CANVAS_HEIGHT: parseFloat(height.toFixed(2)),
+    });
+  }, []);
 
   return (
     <S.PDFViewerContainer>
       {/* 뷰어 컨트롤러 */}
-      <S.ViewerController>
-        <span>{PDFFile?.name}</span>
-        <Button
-          label="PDF 다운로드"
-          onClick={handlePDFDownload}
-          rounded={false}
-        />
-      </S.ViewerController>
+      <ViewerController canvasRefs={canvasRefs} />
 
       {/* 뷰어 */}
       <S.Viewer>
-        <S.CanvasWrapper>
-          <S.Canvas ref={canvasContainerRef} />
+        <S.CanvasWrapper
+          ref={canvasContainerRef}
+          style={{ height: "100%", width: "100%" }}
+        >
+          <S.Canvas ref={canvasRef} />
         </S.CanvasWrapper>
 
-        <S.FloatingButtonArea>
-          <Button
-            label="도장 찍기"
-            onClick={handleStampDraw}
-            theme={ButtonTheme.Secondary}
-          />
-          <Button
-            label="도장 삭제"
-            onClick={handleStampDelete}
-            theme={ButtonTheme.Secondary}
-          />
+        <S.FloatingButtonArea isExistActiveStamp={isExistActiveStamp}>
+          {isExistActiveStamp && (
+            <Button
+              label="🗑️"
+              onClick={handleStampDelete}
+              theme={ButtonTheme.Secondary}
+            />
+          )}
         </S.FloatingButtonArea>
       </S.Viewer>
 

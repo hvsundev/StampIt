@@ -27,9 +27,12 @@ export const PDFProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const handleInitialize = () => {
     setPDFFile(null);
-    setSelectedPDFIndex(-1);
     setSelectedStampIndex(-1);
   };
+
+  useEffect(() => {
+    console.log(selectedPDFIndex);
+  }, [selectedPDFIndex]);
 
   return (
     <PDFContext.Provider

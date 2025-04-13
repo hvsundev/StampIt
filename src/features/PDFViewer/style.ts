@@ -17,20 +17,6 @@ export const Viewer = styled.div`
   background-color: ${({ theme }) => theme.colors.deepGray};
 `;
 
-export const ViewerController = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-left: 24px;
-  width: 100%;
-  height: 48px;
-  background-color: ${({ theme }) => theme.colors.white};
-
-  span {
-    font-size: 16px;
-  }
-`;
-
 export const Preview = styled.div`
   width: 100%;
   height: 20%;
@@ -39,10 +25,12 @@ export const Preview = styled.div`
 `;
 
 export const CanvasWrapper = styled.div`
-  display: flex;
-  justify-content: center;
   width: 100%;
   height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-y: scroll;
 `;
 
 export const Canvas = styled.div`
@@ -52,10 +40,15 @@ export const Canvas = styled.div`
   justify-content: center;
 `;
 
-export const FloatingButtonArea = styled.div`
+export const FloatingButtonArea = styled.div<{ isExistActiveStamp: boolean }>`
   position: absolute;
   display: flex;
+  justify-content: center;
+  left: 0;
+  right: 0;
   gap: 10px;
-  right: 20px;
   bottom: 20px;
+
+  opacity: ${({ isExistActiveStamp }) => (isExistActiveStamp ? 1 : 0)};
+  transition: opacity 0.3s ease-in-out;
 `;
