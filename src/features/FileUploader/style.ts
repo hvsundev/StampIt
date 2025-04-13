@@ -163,7 +163,6 @@ export const StampImage = styled.img<{
   border-radius: 8px;
   border: ${({ isSelected }) =>
     isSelected ? "2px solid #3b82f6" : `1px solid #e4e4e4`};
-  // background-color: ${({ theme }) => theme.colors.paleGray};
   -webkit-user-drag: none;
   -khtml-user-drag: none;
   -moz-user-drag: none;
