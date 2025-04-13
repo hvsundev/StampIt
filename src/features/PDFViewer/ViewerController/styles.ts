@@ -14,3 +14,13 @@ export const FileName = styled.span`
   font-size: 16px;
   font-weight: 700;
 `;
+
+export const ScaleBox = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  > span {
+    font-size: 14px;
+  }
+`;

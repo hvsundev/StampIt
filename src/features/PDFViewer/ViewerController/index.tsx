@@ -11,7 +11,7 @@ interface ViewerControllerProps {
 }
 
 const ViewerController = ({ canvasRefs }: ViewerControllerProps) => {
-  const { PDFFile } = usePDF();
+  const { PDFFile, scale, setScale } = usePDF();
 
   const handlePDFDownload = async () => {
     const doc = await PDFDocument.create();
@@ -32,9 +32,22 @@ const ViewerController = ({ canvasRefs }: ViewerControllerProps) => {
     link.click();
   };
 
+  const handleZoomIn = () => {
+    setScale((prev) => Math.min(prev + 0.1, 2)); // 최대 2배
+  };
+
+  const handleZoomOut = () => {
+    setScale((prev) => Math.max(prev - 0.1, 0.2)); // 최소 0.2배
+  };
+
   return (
     <S.ViewerController>
       <S.FileName>{PDFFile?.name}</S.FileName>
+      <S.ScaleBox>
+        <Button label="－" onClick={handleZoomOut} />
+        <span>{Math.round(scale * 100)}%</span>
+        <Button label="＋" onClick={handleZoomIn} />
+      </S.ScaleBox>
       <Button
         label="PDF 다운로드"
         size={ButtonSize.Large}
