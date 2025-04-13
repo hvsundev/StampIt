@@ -22,7 +22,7 @@ export const ImageWrapper = styled.div<{
   display: flex;
   flex: 0 0 auto;
   flex-direction: column;
-  width: 80px;
+  width: 60px;
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
@@ -41,6 +41,5 @@ export const PreviewImage = styled.img`
 export const ImageIndex = styled.div`
   display: flex;
   justify-content: center;
-  padding: 4px 0;
   font-size: 12px;
 `;

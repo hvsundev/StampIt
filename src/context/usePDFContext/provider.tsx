@@ -8,7 +8,7 @@ export const PDFProvider: React.FC<{ children: React.ReactNode }> = ({
   const [stampedPDFUrl, setStampedPDFUrl] = useState<string | null>(null);
 
   const [stamps, setStamps] = useState<string[]>([]);
-  const [selectedStampIndex, setSelectedStampIndex] = useState<number>(0);
+  const [selectedStampIndex, setSelectedStampIndex] = useState<number>(-1);
   const [selectedPDFIndex, setSelectedPDFIndex] = useState<number>(0);
 
   const addStamp = (stamp: string) => {

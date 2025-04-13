@@ -153,6 +153,17 @@ const PDFViewer = () => {
 
   return (
     <S.PDFViewerContainer>
+      {/* 뷰어 컨트롤러 */}
+      <S.ViewerController>
+        <span>{PDFFile?.name}</span>
+        <Button
+          label="PDF 다운로드"
+          onClick={handlePDFDownload}
+          rounded={false}
+        />
+      </S.ViewerController>
+
+      {/* 뷰어 */}
       <S.Viewer>
         <S.CanvasWrapper>
           <S.Canvas ref={canvasContainerRef} />
@@ -169,10 +180,10 @@ const PDFViewer = () => {
             onClick={handleStampDelete}
             theme={ButtonTheme.Secondary}
           />
-          <Button label="PDF 다운로드" onClick={handlePDFDownload} />
         </S.FloatingButtonArea>
       </S.Viewer>
 
+      {/* 썸네일 미리보기 */}
       <S.Preview>
         <PDFPreview />
       </S.Preview>

@@ -9,6 +9,7 @@ export interface ButtonProps {
   onClick?: () => void;
   type?: "button" | "submit" | "reset";
   theme?: ButtonTheme;
+  rounded?: boolean;
   disabled?: boolean;
   loading?: boolean;
 }

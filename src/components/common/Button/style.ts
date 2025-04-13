@@ -5,14 +5,17 @@ import { ButtonTheme } from "./interface.ts";
 export const ButtonWrapper = styled.button<{
   themeStyle: ButtonTheme;
   disabled?: boolean;
-}>(({ themeStyle, disabled }) => {
+  rounded?: boolean;
+}>(({ themeStyle, disabled, rounded }) => {
   const base = css`
     padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
+    border-radius: ${rounded ? "0.5rem" : 0};
     transition: all 0.2s ease;
     cursor: ${disabled ? "not-allowed" : "pointer"};
     opacity: ${disabled ? 0.5 : 1};
     ${disabled && "pointer-events: none"};
+    height: 100%;
+    font-weight: 700;
   `;
 
   const themeStyles = {

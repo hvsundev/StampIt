@@ -11,7 +11,7 @@ const FileUploader = () => {
           <PDFUploader />
         </S.FileUploaderSection>
 
-        {/* 도장 업로드 */}
+        {/* 도장 이미지 업로드 */}
         <S.FileUploaderSection>
           <StampUploader />
         </S.FileUploaderSection>

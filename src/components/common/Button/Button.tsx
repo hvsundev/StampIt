@@ -7,6 +7,7 @@ const Button: React.FC<ButtonProps> = ({
   label,
   type = "button",
   theme = ButtonTheme.Primary,
+  rounded = true,
   disabled = false,
   loading = false,
 }: ButtonProps) => {
@@ -18,6 +19,7 @@ const Button: React.FC<ButtonProps> = ({
       onClick={disabled || loading ? undefined : onClick}
       disabled={disabled || loading}
       themeStyle={theme}
+      rounded={rounded}
     >
       {label}
     </ButtonWrapper>

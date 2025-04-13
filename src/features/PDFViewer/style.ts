@@ -10,10 +10,25 @@ export const PDFViewerContainer = styled.div`
 `;
 
 export const Viewer = styled.div`
+  display: flex;
   position: relative;
   width: 100%;
-  height: 80%;
-  background-color: ${({ theme }) => theme.colors.gray};
+  height: calc(80% - 48px);
+  background-color: ${({ theme }) => theme.colors.deepGray};
+`;
+
+export const ViewerController = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 24px;
+  width: 100%;
+  height: 48px;
+  background-color: ${({ theme }) => theme.colors.white};
+
+  span {
+    font-size: 16px;
+  }
 `;
 
 export const Preview = styled.div`
@@ -24,6 +39,8 @@ export const Preview = styled.div`
 `;
 
 export const CanvasWrapper = styled.div`
+  display: flex;
+  justify-content: center;
   width: 100%;
   height: 100%;
 `;
