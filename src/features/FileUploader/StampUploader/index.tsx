@@ -2,7 +2,7 @@ import * as S from "@/features/FileUploader/style.ts";
 import Button from "@/components/common/Button/Button.tsx";
 import React, { useRef } from "react";
 import { usePDF } from "@/context/usePDFContext";
-import { Description } from "@/features/FileUploader/style.ts";
+import EmptyStampImage from "@/assets/images/stamp_empty.svg";
 
 const IMAGE_UPLOAD_LIMIT = 5;
 
@@ -52,17 +52,22 @@ const StampUploader = () => {
         </S.UploadHeader>
         <S.UploadContent>
           <S.Stamps>
-            {[0, 1, 2, 3, 4].map((imageIndex) => (
-              <S.StampImage
-                key={imageIndex}
-                src={stamps[imageIndex]}
-                onClick={() =>
-                  stamps[imageIndex] ? setSelectedStampIndex(imageIndex) : null
-                }
-                isSelected={selectedStampIndex === imageIndex}
-                isEmpty={!stamps[imageIndex]}
-              />
-            ))}
+            {Array.from({ length: IMAGE_UPLOAD_LIMIT }).map((_, index) => {
+              return (
+                <S.StampImage
+                  key={index}
+                  onClick={() =>
+                    stamps[index] ? setSelectedStampIndex(index) : null
+                  }
+                  isEmpty={!stamps[index]}
+                >
+                  <img
+                    src={!stamps[index] ? EmptyStampImage : stamps[index]}
+                    alt={`stamp-${index}`}
+                  />
+                </S.StampImage>
+              );
+            })}
           </S.Stamps>
           <S.Description>* 확장자는 'png'로 제한됩니다.</S.Description>
           <S.Count>

@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
+import { disableUserDrag } from "@/assets/styles/mixins.ts";
 
 export const FileUploaderWrapper = styled.div`
   display: flex;
@@ -10,20 +11,6 @@ export const FileUploaderWrapper = styled.div`
 
 export const FileUploaderSection = styled.div`
   padding: 24px 30px;
-`;
-
-export const FileUploaderHeader = styled.div`
-  padding: 24px 30px;
-
-  h1 {
-    font-size: 24px;
-    letter-spacing: -0.3px;
-    color: ${({ theme }) => theme.colors.primary};
-  }
-
-  img {
-    width: 100px;
-  }
 `;
 
 export const FileUploaderContent = styled.div`
@@ -78,7 +65,7 @@ export const DropArea = styled.div<{ isExistFile: boolean }>`
 
       &:hover {
         border-color: #1d5aff;
-        background-color: ${theme.colors.paleGray};
+        background-color: ${theme.opacityColors.primary_20};
 
         &::after {
           position: absolute;
@@ -153,25 +140,65 @@ export const Count = styled.span`
   }
 `;
 
-export const StampImage = styled.img<{
-  isSelected: boolean;
+export const StampImage = styled.div<{
   isEmpty: boolean;
 }>`
-  width: 70px;
-  height: 70px;
-  object-fit: contain;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: calc((100% - 16px) / 3);
+  aspect-ratio: 1;
   border-radius: 8px;
-  border: ${({ isSelected }) =>
-    isSelected ? "2px solid #3b82f6" : `1px solid #e4e4e4`};
-  -webkit-user-drag: none;
-  -khtml-user-drag: none;
-  -moz-user-drag: none;
-  -o-user-drag: none;
-  user-drag: none;
+  border: 1px solid ${({ theme }) => theme.colors.paleGray};
+  overflow: hidden;
+  user-select: none;
+  transition: background-color 0.3s;
+  ${disableUserDrag}
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
 
   &:hover {
     cursor: ${({ isEmpty }) => (isEmpty ? "unset" : "pointer")};
+
+    ${({ isEmpty, theme }) =>
+      !isEmpty &&
+      `
+      border-color: ${theme.colors.primary}; 
+      
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        background-color: ${theme.opacityColors.primary_20};
+        background-image: url('src/assets/images/stamp.svg');         
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 40%;
+
+        border-radius: 8px;
+      }
+    `}
+  }
+
+  &:active {
+    ${({ isEmpty, theme }) =>
+      !isEmpty &&
+      `
+      &::after {
+        background-color: ${theme.opacityColors.primary_30};
+      }
+    `}
   }
 `;
-
-export const RemoveButton = styled.div``;

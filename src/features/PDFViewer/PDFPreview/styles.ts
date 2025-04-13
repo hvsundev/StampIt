@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { disableUserDrag } from "@/assets/styles/mixins.ts";
 
 export const Wrapper = styled.div`
   display: flex;
@@ -36,11 +37,7 @@ export const ImageWrapper = styled.div<{
 export const PreviewImage = styled.img`
   width: 100%;
   height: auto;
-  -webkit-user-drag: none;
-  -khtml-user-drag: none;
-  -moz-user-drag: none;
-  -o-user-drag: none;
-  user-drag: none;
+  ${disableUserDrag}
 `;
 
 export const ImageIndex = styled.div`

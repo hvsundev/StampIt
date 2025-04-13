@@ -8,8 +8,14 @@ const colors = {
   deepGray: "#b9b9b9",
 };
 
+const opacityColors = {
+  primary_20: "rgba(59,130,246,0.2)",
+  primary_30: "rgba(59,130,246,0.3)",
+};
+
 const theme = {
   colors,
+  opacityColors,
 };
 
 export type AppTheme = typeof theme;
