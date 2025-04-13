@@ -1,10 +1,10 @@
 import * as S from "@/features/FileUploader/style.ts";
 import Button from "@/components/common/Button/Button.tsx";
-import { useRef } from "react";
+import React, { useRef } from "react";
 import { usePDF } from "@/context/usePDFContext";
 
 const StampUploader = () => {
-  const { selectedStampImage, setSelectedStampImage, stamps, addStamp } =
+  const { selectedStampIndex, setSelectedStampIndex, stamps, addStamp } =
     usePDF();
   const stampInputRef = useRef<HTMLInputElement>(null);
 
@@ -17,21 +17,10 @@ const StampUploader = () => {
     if (!file) return;
 
     const reader = new FileReader();
-
     reader.onloadend = () => {
       const imageDataUrl = reader.result as string;
-      const uniqueId = `stamp-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
-      const newStamp = {
-        id: uniqueId,
-        image: imageDataUrl,
-        x: 0,
-        y: 0,
-      };
-
-      addStamp(newStamp);
-      setSelectedStampImage(imageDataUrl);
+      addStamp(imageDataUrl);
     };
-
     reader.readAsDataURL(file);
 
     e.target.value = "";
@@ -51,12 +40,12 @@ const StampUploader = () => {
       </S.StampUpload>
 
       <S.Stamps>
-        {stamps.map((stamp) => (
+        {stamps.map((stamp, index) => (
           <S.StampImage
-            key={stamp.id}
-            src={stamp.image}
-            onClick={() => setSelectedStampImage(stamp.image)}
-            isSelected={selectedStampImage === stamp.image}
+            key={index}
+            src={stamp}
+            onClick={() => setSelectedStampIndex(index)}
+            isSelected={selectedStampIndex === index}
           />
         ))}
       </S.Stamps>

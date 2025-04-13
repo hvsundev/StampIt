@@ -1,9 +1,13 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import * as fabric from "fabric";
-import * as S from "./style.ts";
 import { PDFDocument } from "pdf-lib";
-import { getImageByFile } from "@/utils/utils.ts";
+
+import { getImagesByFile } from "@/utils/utils.ts";
+import * as S from "./style.ts";
+import Button from "@/components/common/Button/Button.tsx";
 import { usePDF } from "@/context/usePDFContext";
+import { ButtonTheme } from "@/components/common/Button/interface.ts";
+import PDFPreview from "@/features/PDFViewer/PDFPreview";
 
 const FABRIC_CANVAS_WIDTH = 500;
 const FABRIC_CANVAS_HEIGHT = parseFloat(
@@ -11,104 +15,168 @@ const FABRIC_CANVAS_HEIGHT = parseFloat(
 );
 
 const PDFViewer = () => {
-  const { PDFFile, stamps } = usePDF();
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const fabricCanvasRef = useRef<fabric.Canvas | null>(null);
+  const { PDFFile, selectedPDFIndex, stamps, selectedStampIndex } = usePDF();
+  const canvasContainerRef = useRef<HTMLDivElement>(null);
+  const canvasRefs = useRef<fabric.Canvas[]>([]);
 
-  const handlePDFDownload = async () => {
-    if (!fabricCanvasRef.current) return;
+  const [pdfPages, setPdfPages] = useState<string[]>([]);
 
-    const dataUrl = fabricCanvasRef.current.toDataURL({
-      format: "png",
-      multiplier: 2,
-    });
+  const activeCanvas = useMemo(() => {
+    return canvasRefs.current[selectedPDFIndex];
+  }, [selectedPDFIndex]);
 
-    const PDFDoc = await PDFDocument.create();
-    const page = PDFDoc.addPage();
-
-    const pngImageBytes = await fetch(dataUrl).then((res) => res.arrayBuffer());
-    const pngImage = await PDFDoc.embedPng(pngImageBytes);
-
-    const { width, height } = pngImage.scale(1);
-    page.setSize(width, height);
-    page.drawImage(pngImage, {
-      x: 0,
-      y: 0,
-      width,
-      height,
-    });
-
-    const pdfBytes = await PDFDoc.save();
-    const blob = new Blob([pdfBytes], { type: "application/pdf" });
-    const blobUrl = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = blobUrl;
-    a.download = "stamped.pdf";
-    a.click();
-    URL.revokeObjectURL(blobUrl);
+  const mountCanvas = (container: HTMLDivElement, canvas: fabric.Canvas) => {
+    container.innerHTML = "";
+    container.appendChild(canvas.wrapperEl);
+    canvas.requestRenderAll();
   };
 
-  // PDF 로딩
-  useEffect(() => {
-    if (!PDFFile || !canvasRef.current) return;
+  const createDeleteHandler = (canvas: fabric.Canvas) => {
+    return (e: KeyboardEvent) => {
+      if (e.key === "Delete" || e.key === "Backspace") {
+        const activeObj = canvas.getActiveObject();
+        if (activeObj) {
+          canvas.remove(activeObj);
+          canvas.discardActiveObject();
+          canvas.requestRenderAll();
+        }
+      }
+    };
+  };
 
-    if (fabricCanvasRef.current) {
-      // TODO: 캔버스 여러개 추가할 수 있도록 처리
-      fabricCanvasRef.current.dispose();
+  const handleStampDelete = () => {
+    const activeObj = activeCanvas.getActiveObject();
+    if (activeObj) {
+      activeCanvas.remove(activeObj);
+      activeCanvas.discardActiveObject();
+      activeCanvas.requestRenderAll();
     }
+  };
 
-    fabricCanvasRef.current = new fabric.Canvas(canvasRef.current, {
-      width: FABRIC_CANVAS_WIDTH,
-      height: FABRIC_CANVAS_HEIGHT,
-      selection: false,
-    });
-
-    (async () => {
-      const image = await getImageByFile(PDFFile);
-
-      const img = await fabric.FabricImage.fromURL(image!);
-
-      img.set({
-        objectCaching: false,
+  const handleStampDraw = () => {
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.onload = () => {
+      const imgObj = new fabric.Image(img, {
+        left: 150,
+        top: 150,
+        scaleX: 0.3,
+        scaleY: 0.3,
       });
 
-      fabricCanvasRef.current!.backgroundImage = img;
-      fabricCanvasRef.current?.requestRenderAll();
+      activeCanvas.add(imgObj);
+      activeCanvas.setActiveObject(imgObj);
+      activeCanvas.requestRenderAll();
+    };
+    img.src = stamps[selectedStampIndex];
+    console.log(stamps[selectedStampIndex]);
+  };
+
+  const handlePDFDownload = async () => {
+    const doc = await PDFDocument.create();
+
+    for (const canvas of canvasRefs.current) {
+      const dataUrl = canvas.toDataURL();
+      const png = await fetch(dataUrl).then((res) => res.arrayBuffer());
+      const img = await doc.embedPng(png);
+      const page = doc.addPage([img.width, img.height]);
+      page.drawImage(img, { x: 0, y: 0, width: img.width, height: img.height });
+    }
+
+    const pdfBytes = await doc.save();
+    const blob = new Blob([pdfBytes], { type: "application/pdf" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "stamped.pdf";
+    link.click();
+  };
+
+  useEffect(() => {
+    if (!PDFFile) return;
+
+    (async () => {
+      const images = await getImagesByFile(PDFFile);
+      setPdfPages(images);
+
+      const newCanvases: fabric.Canvas[] = [];
+
+      for (let i = 0; i < images.length; i++) {
+        const rawCanvas = document.createElement("canvas");
+        rawCanvas.width = FABRIC_CANVAS_WIDTH;
+        rawCanvas.height = FABRIC_CANVAS_HEIGHT;
+
+        if (i === 0 && canvasContainerRef.current) {
+          canvasContainerRef.current.innerHTML = "";
+          canvasContainerRef.current.appendChild(rawCanvas);
+        }
+
+        const fabricCanvas = new fabric.Canvas(rawCanvas, {
+          selection: true,
+        });
+        fabricCanvas.defaultCursor = "move";
+
+        const bgImage = await new Promise<fabric.Image>((resolve) => {
+          const image = new Image();
+          image.crossOrigin = "anonymous";
+          image.onload = () => {
+            resolve(
+              new fabric.Image(image, {
+                selectable: false,
+                evented: false,
+              }),
+            );
+          };
+          image.src = images[i];
+        });
+
+        fabricCanvas.backgroundImage = bgImage;
+        fabricCanvas.renderAll();
+
+        newCanvases.push(fabricCanvas);
+      }
+
+      canvasRefs.current = newCanvases;
     })();
   }, [PDFFile]);
 
-  // 이미지 스탬프 추가
   useEffect(() => {
-    if (!fabricCanvasRef.current || !stamps || stamps.length === 0) return;
+    const container = canvasContainerRef.current;
 
-    stamps.forEach((stamp, index) => {
-      const img = new Image();
-      img.onload = () => {
-        const imgObj = new fabric.Image(img, {
-          left: 50 + index * 50, // 각 이미지가 겹치지 않게 위치 조정
-          top: 50 + index * 50,
-          scaleX: 0.3,
-          scaleY: 0.3,
-          selectable: true,
-        });
+    if (!container || !activeCanvas) return;
 
-        fabricCanvasRef.current!.add(imgObj);
-        fabricCanvasRef.current!.renderAll();
-        console.log(`✅ 스탬프 이미지 ${index + 1} 추가 완료!`);
-      };
+    mountCanvas(container, activeCanvas);
+    const handleKeyDown = createDeleteHandler(activeCanvas);
 
-      img.crossOrigin = "anonymous";
-      img.src = stamp.image;
-    });
-  }, [stamps]);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedPDFIndex]);
 
   return (
-    <S.PDFViewerWrapper>
-      <S.CanvasWrapper>
-        <canvas ref={canvasRef} />
-      </S.CanvasWrapper>
-    </S.PDFViewerWrapper>
+    <S.PDFViewerContainer>
+      <S.Viewer>
+        <S.CanvasWrapper>
+          <S.Canvas ref={canvasContainerRef} />
+        </S.CanvasWrapper>
+
+        <S.FloatingButtonArea>
+          <Button
+            label="도장 찍기"
+            onClick={handleStampDraw}
+            theme={ButtonTheme.Secondary}
+          />
+          <Button
+            label="도장 삭제"
+            onClick={handleStampDelete}
+            theme={ButtonTheme.Secondary}
+          />
+          <Button label="PDF 다운로드" onClick={handlePDFDownload} />
+        </S.FloatingButtonArea>
+      </S.Viewer>
+
+      <S.Preview>
+        <PDFPreview />
+      </S.Preview>
+    </S.PDFViewerContainer>
   );
 };
 
