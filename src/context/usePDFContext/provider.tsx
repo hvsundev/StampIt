@@ -5,7 +5,6 @@ export const PDFProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [PDFFile, setPDFFile] = useState<File | null>(null);
-  const [stampedPDFUrl, setStampedPDFUrl] = useState<string | null>(null);
 
   const [stamps, setStamps] = useState<string[]>([]);
   const [scale, setScale] = useState<number>(1);
@@ -40,8 +39,6 @@ export const PDFProvider: React.FC<{ children: React.ReactNode }> = ({
       value={{
         PDFFile,
         setPDFFile,
-        stampedPDFUrl,
-        setStampedPDFUrl,
         stamps,
         addStamp,
         resetStamps,
