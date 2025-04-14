@@ -1,9 +1,11 @@
-import * as S from "@/features/FileUploader/style.ts";
+import * as S from "./style.ts";
 import Button from "@/components/common/Button";
 import React, { useRef } from "react";
 import { usePDFFileManager } from "@/context/usePDFFileManager";
-import StampItem from "@/features/FileUploader/components/StempItem";
+import StampItem from "features/FileUploader/components/StampItem";
 import { useDialog } from "@/context/useDialog";
+import Count from "@/features/FileUploader/components/Count";
+import StepTitle from "@/features/FileUploader/components/StepTitle";
 
 const IMAGE_UPLOAD_LIMIT = 5;
 
@@ -11,6 +13,7 @@ const StampUploader = () => {
   const { PDFFile, setSelectedStampIndex, stamps, addStamp, deleteStamp } =
     usePDFFileManager();
   const { showToast } = useDialog();
+
   const stampInputRef = useRef<HTMLInputElement>(null);
 
   const handleStampUpload = () => {
@@ -43,10 +46,7 @@ const StampUploader = () => {
   return (
     <S.Uploader>
       <S.UploadHeader>
-        <S.UploadTitle>
-          <S.StepNumbering>2</S.StepNumbering>
-          <S.Title>도장 이미지</S.Title>
-        </S.UploadTitle>
+        <StepTitle title={"도장 이미지"} step={2} />
         <input
           ref={stampInputRef}
           type="file"
@@ -68,25 +68,14 @@ const StampUploader = () => {
               key={index}
               index={index}
               stampSrc={stamps[index]}
-              onSelect={() => {
-                if (!PDFFile) {
-                  showToast({
-                    type: "warning",
-                    message: `도장 찍기는 PDF 파일 업로드 후 가능해요`,
-                  });
-                }
-                setSelectedStampIndex(index);
-              }}
+              onSelect={() => setSelectedStampIndex(index)}
               onUpload={handleStampUpload}
               onDelete={() => deleteStamp(index)}
             />
           ))}
         </S.Stamps>
         <S.Description>* PNG 파일만 업로드 가능</S.Description>
-        <S.Count>
-          <span>{`${stamps.length}`}</span>
-          {`/${IMAGE_UPLOAD_LIMIT}`}
-        </S.Count>
+        <Count current={stamps.length} max={IMAGE_UPLOAD_LIMIT} />
       </S.UploadContent>
     </S.Uploader>
   );

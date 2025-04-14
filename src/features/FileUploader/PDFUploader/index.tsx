@@ -3,6 +3,9 @@ import * as S from "@/features/FileUploader/style.ts";
 import Index from "@/components/common/Button";
 import { usePDFFileManager } from "@/context/usePDFFileManager";
 import { useDialog } from "@/context/useDialog";
+import DropZone from "@/features/FileUploader/components/DropZone";
+import StepTitle from "@/features/FileUploader/components/StepTitle";
+import Count from "@/features/FileUploader/components/Count";
 
 const PDF_UPLOAD_LIMIT = 1;
 
@@ -72,10 +75,7 @@ const PDFUploader = () => {
   return (
     <S.Uploader>
       <S.UploadHeader>
-        <S.UploadTitle>
-          <S.StepNumbering>1</S.StepNumbering>
-          <S.Title>PDF</S.Title>
-        </S.UploadTitle>
+        <StepTitle title={"PDF"} step={1} />
         <input
           ref={inputRef}
           type="file"
@@ -87,30 +87,16 @@ const PDFUploader = () => {
       </S.UploadHeader>
 
       <S.UploadContent>
-        <S.DropArea
+        <DropZone
+          file={PDFFile}
+          isDragging={isDragging}
           onClick={PDFFile ? handlePDFRemove : handleClick}
-          onDragOver={(e) => e.preventDefault()}
+          onDrop={handleDrop}
           onDragEnter={() => setIsDragging(true)}
           onDragLeave={() => setIsDragging(false)}
-          onDrop={handleDrop}
-          isExistFile={!!PDFFile}
-          isDragging={isDragging}
-        >
-          {PDFFile ? (
-            <S.File>
-              <span>📄 {PDFFile?.name}</span>
-            </S.File>
-          ) : (
-            <p>
-              PDF 파일을 이 곳에 드래그하거나
-              <br />
-              클릭하여 업로드 할 수 있어요
-            </p>
-          )}
-        </S.DropArea>
-        <S.Count>
-          <span>{PDFFile ? 1 : 0}</span>/{PDF_UPLOAD_LIMIT}
-        </S.Count>
+          onDragOver={(e) => e.preventDefault()}
+        />
+        <Count current={PDFFile ? 1 : 0} max={PDF_UPLOAD_LIMIT} />
       </S.UploadContent>
     </S.Uploader>
   );

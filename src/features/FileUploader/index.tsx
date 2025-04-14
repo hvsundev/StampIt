@@ -5,10 +5,6 @@ import StampUploader from "@/features/FileUploader/StampUploader";
 const FileUploader = () => {
   return (
     <S.FileUploaderWrapper>
-      {/*<S.FileUploaderHeader>*/}
-      {/*  <img src={StampLogo} alt="로고" />*/}
-      {/*<h1>전자 도장을 찍어보자!</h1>*/}
-      {/*</S.FileUploaderHeader>*/}
       <S.FileUploaderContent>
         {/* PDF 업로드 */}
         <S.FileUploaderSection>
