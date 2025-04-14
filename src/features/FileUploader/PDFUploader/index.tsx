@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as S from "@/features/FileUploader/style.ts";
 import Index from "@/components/common/Button";
-import { usePDF } from "@/context/usePDFContext";
+import { usePDFFileManager } from "@/context/usePDFFileManager";
 import { useDialog } from "@/context/useDialog";
 
 const PDF_UPLOAD_LIMIT = 1;
 
 const PDFUploader = () => {
   const { showConfirm } = useDialog();
-  const { PDFFile, setPDFFile, handleInitialize } = usePDF();
+  const { PDFFile, setPDFFile, handleInitialize } = usePDFFileManager();
   const inputRef = useRef<HTMLInputElement>(null);
   const [isDragging, setIsDragging] = useState(false);
 

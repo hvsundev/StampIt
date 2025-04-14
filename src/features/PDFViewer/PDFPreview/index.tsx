@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import * as S from "./styles.ts";
 import { getImagesByFile } from "@/utils/utils.ts";
-import { usePDF } from "@/context/usePDFContext";
+import { usePDFFileManager } from "@/context/usePDFFileManager";
 
 const PDFPreview = () => {
-  const { PDFFile, selectedPDFIndex, setSelectedPDFIndex } = usePDF();
+  const { PDFFile, selectedPDFIndex, setSelectedPDFIndex } =
+    usePDFFileManager();
   const [fileImages, setFileImages] = useState<string[] | null>(null);
 
   useEffect(() => {

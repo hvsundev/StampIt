@@ -1,13 +1,16 @@
 import * as S from "@/features/FileUploader/style.ts";
 import Button from "@/components/common/Button";
 import React, { useRef } from "react";
-import { usePDF } from "@/context/usePDFContext";
+import { usePDFFileManager } from "@/context/usePDFFileManager";
 import StampItem from "@/features/FileUploader/components/StempItem";
+import { useDialog } from "@/context/useDialog";
 
 const IMAGE_UPLOAD_LIMIT = 5;
 
 const StampUploader = () => {
-  const { setSelectedStampIndex, stamps, addStamp, deleteStamp } = usePDF();
+  const { setSelectedStampIndex, stamps, addStamp, deleteStamp } =
+    usePDFFileManager();
+  const { showToast } = useDialog();
   const stampInputRef = useRef<HTMLInputElement>(null);
 
   const handleStampUpload = () => {
@@ -17,6 +20,16 @@ const StampUploader = () => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+
+    if (file.type !== "image/png") {
+      showToast({
+        type: "warning",
+        message: `PNG 형식의 파일만 업로드할 수 있어요`,
+      });
+
+      e.target.value = "";
+      return;
+    }
 
     const reader = new FileReader();
     reader.onloadend = () => {

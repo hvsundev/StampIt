@@ -2,7 +2,7 @@ import Layout from "@/components/layout";
 import FileUploader from "@/features/FileUploader";
 import PDFViewer from "@/features/PDFViewer";
 
-import { PDFProvider } from "@/context/usePDFContext/provider.tsx";
+import { PDFProvider } from "@/context/usePDFFileManager/provider.tsx";
 import { ThemeProvider } from "@emotion/react";
 import theme from "@/assets/styles/theme.ts";
 import { DialogProvider } from "@/context/useDialog/provider.tsx";
@@ -10,16 +10,16 @@ import { DialogProvider } from "@/context/useDialog/provider.tsx";
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <PDFProvider>
-        <DialogProvider>
+      <DialogProvider>
+        <PDFProvider>
           <Layout
             children={{
               fileUploader: <FileUploader />,
               PDFViewer: <PDFViewer />,
             }}
           />
-        </DialogProvider>
-      </PDFProvider>
+        </PDFProvider>
+      </DialogProvider>
     </ThemeProvider>
   );
 }

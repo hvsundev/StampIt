@@ -3,7 +3,7 @@ import * as fabric from "fabric";
 
 import * as S from "./style.ts";
 import Button from "@/components/common/Button";
-import { usePDF } from "@/context/usePDFContext";
+import { usePDFFileManager } from "@/context/usePDFFileManager";
 import { ButtonTheme } from "@/components/common/Button/interface.ts";
 import PDFPreview from "@/features/PDFViewer/PDFPreview";
 import ViewerController from "@/features/PDFViewer/ViewerController";
@@ -24,7 +24,7 @@ const PDFViewer = () => {
     handleInitialize,
     canvasSize,
     scale,
-  } = usePDF();
+  } = usePDFFileManager();
 
   const canvasRef = useRef<HTMLDivElement>(null);
   const canvasContainerRef = useRef<HTMLDivElement>(null);

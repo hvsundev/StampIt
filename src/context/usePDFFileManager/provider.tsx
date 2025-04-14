@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import PDFContext from "@/context/usePDFContext/context.ts";
+import PDFContext from "@/context/usePDFFileManager/context.ts";
+import { useDialog } from "@/context/useDialog";
 
 export const PDFProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const { showToast } = useDialog();
   const [PDFFile, setPDFFile] = useState<File | null>(null);
 
   const [stamps, setStamps] = useState<string[]>([]);
@@ -22,7 +24,10 @@ export const PDFProvider: React.FC<{ children: React.ReactNode }> = ({
     if (stamps.length < 5) {
       setStamps((prev) => [...prev, stamp]);
     } else {
-      alert("최대 5개까지 업로드 할 수 있어요");
+      showToast({
+        type: "warning",
+        message: "최대 5개까지 업로드 할 수 있어요",
+      });
     }
   };
 

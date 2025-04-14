@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { PDFContextType } from "@/context/usePDFContext/interface.ts";
+import { PDFContextType } from "@/context/usePDFFileManager/interface.ts";
 
 const PDFContext = createContext<PDFContextType | undefined>(undefined);
 

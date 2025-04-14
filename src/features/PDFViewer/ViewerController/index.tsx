@@ -1,5 +1,5 @@
 import * as S from "./styles.ts";
-import { usePDF } from "@/context/usePDFContext";
+import { usePDFFileManager } from "@/context/usePDFFileManager";
 import Button from "@/components/common/Button";
 import { PDFDocument } from "pdf-lib";
 import * as fabric from "fabric";
@@ -11,7 +11,7 @@ interface ViewerControllerProps {
 }
 
 const ViewerController = ({ canvasRefs }: ViewerControllerProps) => {
-  const { PDFFile, scale, setScale } = usePDF();
+  const { PDFFile, scale, setScale } = usePDFFileManager();
 
   const handlePDFDownload = async () => {
     const doc = await PDFDocument.create();

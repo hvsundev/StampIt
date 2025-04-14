@@ -1,7 +1,6 @@
 import * as S from "./style.ts";
 import PDFUploader from "@/features/FileUploader/PDFUploader";
 import StampUploader from "@/features/FileUploader/StampUploader";
-import StampLogo from "@/assets/images/logo.png";
 
 const FileUploader = () => {
   return (

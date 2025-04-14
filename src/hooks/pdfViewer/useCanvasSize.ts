@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import { usePDF } from "@/context/usePDFContext";
+import { usePDFFileManager } from "@/context/usePDFFileManager";
 import { getImagesByFile } from "@/utils/utils";
 
 export const useCanvasSize = () => {
-  const { PDFFile, setCanvasSize } = usePDF();
+  const { PDFFile, setCanvasSize } = usePDFFileManager();
 
   useEffect(() => {
     if (!PDFFile) return;

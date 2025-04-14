@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import { PDFContextType } from "@/context/usePDFContext/interface.ts";
-import PDFContext from "@/context/usePDFContext/context.ts";
+import { PDFContextType } from "@/context/usePDFFileManager/interface.ts";
+import PDFContext from "@/context/usePDFFileManager/context.ts";
 
-export const usePDF = (): PDFContextType => {
+export const usePDFFileManager = (): PDFContextType => {
   const usePDFContext = useContext(PDFContext);
 
   if (!usePDFContext) {
