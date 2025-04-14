@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import * as fabric from "fabric";
 import { getImagesByFile } from "@/utils/utils.ts";
+import { usePDFFileManager } from "@/context/usePDFFileManager";
 
 export const useFabricCanvases = ({
   PDFFile,
@@ -17,6 +18,8 @@ export const useFabricCanvases = ({
   setPdfPages: (pages: string[]) => void;
   handleInitialize: () => void;
 }) => {
+  const { scale } = usePDFFileManager();
+
   useEffect(() => {
     if (!PDFFile) {
       canvasRefs.current = [];
@@ -68,6 +71,12 @@ export const useFabricCanvases = ({
         fabricCanvas.backgroundImage = bgImage;
         fabricCanvas.renderAll();
         newCanvases.push(fabricCanvas);
+
+        const center = new fabric.Point(
+          fabricCanvas.getWidth() / 2,
+          fabricCanvas.getHeight() / 2,
+        );
+        fabricCanvas.zoomToPoint(center, scale);
       }
 
       canvasRefs.current = newCanvases;

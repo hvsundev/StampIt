@@ -24,7 +24,6 @@ export const ImageWrapper = styled.div<{
   flex: 0 0 auto;
   flex-direction: column;
   width: 60px;
-  border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
   transition: border-color 0.3s ease;
