@@ -1,5 +1,10 @@
 import { createRoot } from "react-dom/client";
-import "./main.css";
-import App from "./App.tsx";
+import App from "./App";
+import { GlobalStyle } from "./GlobalStyle";
 
-createRoot(document.getElementById("root")!).render(<App />);
+createRoot(document.getElementById("root")!).render(
+  <>
+    <GlobalStyle />
+    <App />
+  </>,
+);

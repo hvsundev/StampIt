@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as S from "@/features/FileUploader/style.ts";
-import Index from "@/components/common/Button";
 import { usePDFFileManager } from "@/context/usePDFFileManager";
 import { useDialog } from "@/context/useDialog";
 import DropZone from "@/features/FileUploader/components/DropZone";
 import StepTitle from "@/features/FileUploader/components/StepTitle";
 import Count from "@/features/FileUploader/components/Count";
+import Button from "@/components/common/Button";
 
 const PDF_UPLOAD_LIMIT = 1;
 
@@ -83,7 +83,7 @@ const PDFUploader = () => {
           style={{ display: "none" }}
           onChange={handleFileSelect}
         />
-        <Index label={"업로드"} onClick={handleClick} disabled={!!PDFFile} />
+        <Button label={"업로드"} onClick={handleClick} disabled={!!PDFFile} />
       </S.UploadHeader>
 
       <S.UploadContent>

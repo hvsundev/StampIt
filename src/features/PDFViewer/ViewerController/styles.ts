@@ -37,13 +37,13 @@ export const ZoomButton = styled.button`
   padding: 4px 8px;
   font-size: 16px;
   font-weight: 500;
-  background-color: #ffffff;
+  background-color: ${({ theme }) => theme.colors.white};
   border: 1px solid #ccc;
   border-radius: 4px;
   cursor: pointer;
 
   &:hover {
-    background-color: #f2f2f2;
+    background-color: ${({ theme }) => theme.colors.paleGray};
   }
 `;
 
