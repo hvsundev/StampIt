@@ -55,6 +55,7 @@ const PDFViewer = () => {
     stamps,
     canvasRefs,
     selectedPDFIndex,
+    setIsExistActiveStamp,
   });
 
   const handleStampDelete = () => {

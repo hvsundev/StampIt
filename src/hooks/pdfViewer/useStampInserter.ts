@@ -7,12 +7,14 @@ export const useStampInserter = ({
   stamps,
   canvasRefs,
   selectedPDFIndex,
+  setIsExistActiveStamp,
 }: {
   selectedStampIndex: number;
   setSelectedStampIndex: (index: number) => void;
   stamps: string[];
   canvasRefs: React.MutableRefObject<fabric.Canvas[]>;
   selectedPDFIndex: number;
+  setIsExistActiveStamp?: (val: boolean) => void;
 }) => {
   useEffect(() => {
     if (selectedStampIndex === -1 || !stamps[selectedStampIndex]) return;
@@ -32,6 +34,11 @@ export const useStampInserter = ({
       canvas.add(stamp);
       canvas.setActiveObject(stamp);
       canvas.requestRenderAll();
+
+      if (setIsExistActiveStamp) {
+        setIsExistActiveStamp(true);
+      }
+
       setSelectedStampIndex(-1);
     };
     img.src = stamps[selectedStampIndex];
