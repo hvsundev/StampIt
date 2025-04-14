@@ -1,4 +1,4 @@
-export interface AlertOptions {
+export interface ToastOptions {
   message: string;
   type?: "success" | "error" | "info" | "warning";
 }
@@ -10,4 +10,5 @@ export interface ConfirmOptions {
 
 export interface DialogContextType {
   showConfirm: (options: ConfirmOptions) => Promise<boolean>;
+  showToast: (options: ToastOptions) => void;
 }
