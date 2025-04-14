@@ -3,11 +3,12 @@ import Button from "@/components/common/Button";
 import React, { useRef } from "react";
 import { usePDF } from "@/context/usePDFContext";
 import EmptyStampImage from "@/assets/images/stamp_empty.svg";
+import DeleteIcon from "@/assets/images/delete.svg";
 
 const IMAGE_UPLOAD_LIMIT = 5;
 
 const StampUploader = () => {
-  const { setSelectedStampIndex, stamps, addStamp } = usePDF();
+  const { setSelectedStampIndex, stamps, addStamp, deleteStamp } = usePDF();
   const stampInputRef = useRef<HTMLInputElement>(null);
 
   const handleStampUpload = () => {
@@ -62,6 +63,17 @@ const StampUploader = () => {
                       : handleStampUpload()
                   }
                 >
+                  {stamps[index] && (
+                    <S.DeleteButton
+                      className="delete-button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        deleteStamp(index);
+                      }}
+                    >
+                      <img src={DeleteIcon} alt="delete-stamp" />
+                    </S.DeleteButton>
+                  )}
                   <img
                     src={!stamps[index] ? EmptyStampImage : stamps[index]}
                     alt={`stamp-${index}`}

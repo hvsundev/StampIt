@@ -6,7 +6,7 @@ export interface PDFContextType {
 
   stamps: string[];
   addStamp: (stamp: string) => void;
-  resetStamps: () => void;
+  deleteStamp: (index: number) => void;
 
   selectedStampIndex: number;
   setSelectedStampIndex: (index: number) => void;

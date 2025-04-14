@@ -77,6 +77,7 @@ export const DropArea = styled.div<{
       &:hover {
         border-color: ${theme.colors.primary};
         background-color: ${theme.opacityColors.primary_20};
+        color: ${theme.colors.black};
 
         &::after {
           position: absolute;
@@ -84,9 +85,9 @@ export const DropArea = styled.div<{
           align-items: center;
           justify-content: center;
           top: -5px;
-          right: -2px;
-          content: "X";
-          background-color: black;
+          right: -5px;
+          content: "";
+          background-image: url("src/assets/images/delete.svg");
           width: 20px;
           height: 20px;
           color: #fff;
@@ -155,6 +156,20 @@ export const Count = styled.span`
   }
 `;
 
+export const DeleteButton = styled.button`
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  cursor: pointer;
+  opacity: 0;
+  z-index: 1;
+
+  img {
+    width: 20px;
+    height: 20px;
+  }
+`;
+
 export const StampImage = styled.div<{
   isEmpty: boolean;
 }>`
@@ -166,14 +181,17 @@ export const StampImage = styled.div<{
   aspect-ratio: 1;
   border-radius: 8px;
   border: 1px solid ${({ theme }) => theme.colors.paleGray};
-  overflow: hidden;
   user-select: none;
 
-  img {
+  > img {
     width: 100%;
     height: 100%;
     object-fit: contain;
     ${disableUserDrag}
+  }
+
+  &:hover .delete-button {
+    opacity: 1;
   }
 
   &:hover {

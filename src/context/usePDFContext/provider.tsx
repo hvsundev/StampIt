@@ -26,8 +26,16 @@ export const PDFProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
-  const resetStamps = () => {
-    setStamps([]);
+  const deleteStamp = (index: number) => {
+    setStamps((prev) => {
+      const updated = [...prev];
+      updated.splice(index, 1);
+      return updated;
+    });
+
+    setSelectedStampIndex((prevIndex) =>
+      prevIndex === index ? -1 : prevIndex > index ? prevIndex - 1 : prevIndex,
+    );
   };
 
   const handleInitialize = () => {
@@ -43,7 +51,7 @@ export const PDFProvider: React.FC<{ children: React.ReactNode }> = ({
         setPDFFile,
         stamps,
         addStamp,
-        resetStamps,
+        deleteStamp,
         selectedStampIndex,
         setSelectedStampIndex,
         selectedPDFIndex,
