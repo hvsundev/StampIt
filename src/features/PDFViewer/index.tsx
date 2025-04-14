@@ -118,7 +118,6 @@ const PDFViewer = () => {
       <S.Viewer>
         <S.CanvasWrapper ref={canvasContainerRef}>
           <S.Canvas ref={canvasRef} />
-
           {isLoading && <S.LoadingOverlay>PDF 로딩 중...</S.LoadingOverlay>}
         </S.CanvasWrapper>
 
