@@ -45,6 +45,7 @@ export const PDFProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const handleInitialize = () => {
     setPDFFile(null);
+    setSelectedPDFIndex(0);
     setSelectedStampIndex(-1);
     setScale(0.5);
   };
