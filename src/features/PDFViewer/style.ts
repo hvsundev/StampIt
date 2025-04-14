@@ -38,6 +38,7 @@ export const Canvas = styled.div`
   height: 100%;
   display: flex;
   justify-content: center;
+  z-index: 1;
 `;
 
 export const FloatingButtonArea = styled.div<{ isExistActiveStamp: boolean }>`
