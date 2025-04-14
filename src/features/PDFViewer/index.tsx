@@ -11,6 +11,7 @@ import { useStampInserter } from "@/hooks/pdfViewer/useStampInserter.ts";
 import { useActiveCanvasHandlers } from "@/hooks/pdfViewer/useActiveCanvasHandlers.ts";
 import { useFabricCanvases } from "@/hooks/pdfViewer/useFabricCanvases.ts";
 import { useCanvasSize } from "@/hooks/pdfViewer/useCanvasSize.ts";
+import BinIcon from "@/assets/images/bin.svg";
 
 const PDFViewer = () => {
   useCanvasSize();
@@ -117,7 +118,8 @@ const PDFViewer = () => {
         <S.FloatingButtonArea isExistActiveStamp={isExistActiveStamp}>
           {isExistActiveStamp && (
             <Button
-              label="🗑️"
+              label={"삭제"}
+              leftIcon={BinIcon}
               onClick={handleStampDelete}
               theme={ButtonTheme.Secondary}
             />

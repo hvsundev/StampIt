@@ -43,11 +43,20 @@ export const useActiveCanvasHandlers = ({
       obj.top = Math.max(0, Math.min(obj.top!, height - objHeight));
     };
 
+    const handleObjectAdded = () => {
+      setTimeout(() => {
+        updateSelection();
+      }, 0);
+    };
+
+    updateSelection();
+
     document.addEventListener("keydown", handleKeyDown);
     activeCanvas.on("selection:created", updateSelection);
     activeCanvas.on("selection:updated", updateSelection);
     activeCanvas.on("selection:cleared", () => setIsExistActiveStamp(false));
     activeCanvas.on("object:moving", limitObjectMove);
+    activeCanvas.on("object:added", handleObjectAdded);
 
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
@@ -55,6 +64,7 @@ export const useActiveCanvasHandlers = ({
       activeCanvas.off("selection:updated", updateSelection);
       activeCanvas.off("selection:cleared");
       activeCanvas.off("object:moving", limitObjectMove);
+      activeCanvas.off("object:added", handleObjectAdded);
     };
   }, [selectedPDFIndex, canvasRefs.current.length]);
 };

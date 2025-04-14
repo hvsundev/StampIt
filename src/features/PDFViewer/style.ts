@@ -47,7 +47,7 @@ export const FloatingButtonArea = styled.div<{ isExistActiveStamp: boolean }>`
   left: 0;
   right: 0;
   gap: 10px;
-  bottom: 20px;
+  bottom: 30px;
 
   opacity: ${({ isExistActiveStamp }) => (isExistActiveStamp ? 1 : 0)};
   transition: opacity 0.3s ease-in-out;

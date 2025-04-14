@@ -10,7 +10,7 @@ import StepTitle from "@/features/FileUploader/components/StepTitle";
 const IMAGE_UPLOAD_LIMIT = 5;
 
 const StampUploader = () => {
-  const { setSelectedStampIndex, stamps, addStamp, deleteStamp } =
+  const { PDFFile, setSelectedStampIndex, stamps, addStamp, deleteStamp } =
     usePDFFileManager();
   const { showToast } = useDialog();
 
@@ -68,7 +68,17 @@ const StampUploader = () => {
               key={index}
               index={index}
               stampSrc={stamps[index]}
-              onSelect={() => setSelectedStampIndex(index)}
+              onSelect={() => {
+                if (!PDFFile) {
+                  showToast({
+                    type: "warning",
+                    message: `도장 찍기는 PDF 업로드 후에 가능해요`,
+                  });
+                  return;
+                }
+
+                setSelectedStampIndex(index);
+              }}
               onUpload={handleStampUpload}
               onDelete={() => deleteStamp(index)}
             />

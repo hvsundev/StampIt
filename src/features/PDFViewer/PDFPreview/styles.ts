@@ -31,7 +31,7 @@ export const ImageWrapper = styled.div<{
 
   border: 2px solid;
   border-color: ${({ isSelected, theme }) =>
-    isSelected ? "red" : theme.colors.gray};
+    isSelected ? theme.colors.primary : theme.colors.gray};
 `;
 
 export const PreviewImage = styled.img`

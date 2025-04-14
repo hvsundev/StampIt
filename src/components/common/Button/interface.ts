@@ -12,7 +12,7 @@ export enum ButtonSize {
 
 export interface ButtonProps {
   onClick?: () => void;
-  label: string;
+  label?: string;
   type?: "button" | "submit" | "reset";
   theme?: ButtonTheme;
   size?: ButtonSize;

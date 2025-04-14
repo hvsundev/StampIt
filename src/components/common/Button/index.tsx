@@ -4,7 +4,7 @@ import * as S from "./style.ts";
 
 const Button: React.FC<ButtonProps> = ({
   onClick,
-  label,
+  label = "",
   type = "button",
   theme = ButtonTheme.Primary,
   size = ButtonSize.Medium,
@@ -31,7 +31,7 @@ const Button: React.FC<ButtonProps> = ({
           style={{ marginRight: 6, width: 16, height: 16 }}
         />
       )}
-      <span>{label}</span>
+      {label && <span>{label}</span>}
     </S.ButtonWrapper>
   );
 };
