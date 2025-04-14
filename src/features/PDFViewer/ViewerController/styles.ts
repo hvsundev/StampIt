@@ -10,17 +10,41 @@ export const ViewerController = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
 `;
 
+export const Controls = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 100%;
+`;
+
 export const FileName = styled.span`
   font-size: 16px;
   font-weight: 700;
 `;
 
-export const ScaleBox = styled.div`
+export const ZoomControls = styled.div`
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 8px;
+`;
 
-  > span {
-    font-size: 14px;
+export const ZoomButton = styled.button`
+  padding: 4px 8px;
+  font-size: 16px;
+  font-weight: 500;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f2f2f2;
   }
+`;
+
+export const ZoomLevel = styled.span`
+  min-width: 48px;
+  text-align: center;
+  font-weight: 500;
+  color: #444;
 `;

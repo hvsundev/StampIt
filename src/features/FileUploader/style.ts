@@ -153,17 +153,18 @@ export const StampImage = styled.div<{
   border: 1px solid ${({ theme }) => theme.colors.paleGray};
   overflow: hidden;
   user-select: none;
-  transition: background-color 0.3s;
-  ${disableUserDrag}
 
   img {
     width: 100%;
     height: 100%;
     object-fit: contain;
+    ${disableUserDrag}
   }
 
   &:hover {
-    cursor: ${({ isEmpty }) => (isEmpty ? "unset" : "pointer")};
+    cursor: ${({ isEmpty }) => (isEmpty ? "pointer" : "pointer")};
+    border-color: ${({ theme }) => theme.colors.gray};
+    background-color: ${({ theme }) => theme.opacityColors.paleGray_50};
 
     ${({ isEmpty, theme }) =>
       !isEmpty &&
@@ -193,6 +194,8 @@ export const StampImage = styled.div<{
   }
 
   &:active {
+    background-color: ${({ theme }) => theme.colors.paleGray};
+
     ${({ isEmpty, theme }) =>
       !isEmpty &&
       `

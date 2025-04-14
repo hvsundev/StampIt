@@ -11,6 +11,7 @@ const colors = {
 const opacityColors = {
   primary_20: "rgba(59,130,246,0.2)",
   primary_30: "rgba(59,130,246,0.3)",
+  paleGray_50: "rgba(241,241,241,0.5)",
 };
 
 const theme = {

@@ -53,18 +53,23 @@ const ViewerController = ({ canvasRefs }: ViewerControllerProps) => {
   return (
     <S.ViewerController>
       <S.FileName>{PDFFile?.name}</S.FileName>
-      <S.ScaleBox>
-        <Button label="－" onClick={handleZoomOut} />
-        <span>{Math.round(scale * 100)}%</span>
-        <Button label="＋" onClick={handleZoomIn} />
-      </S.ScaleBox>
-      <Button
-        label="PDF 다운로드"
-        size={ButtonSize.Large}
-        onClick={handlePDFDownload}
-        rounded={false}
-        leftIcon={downloadIcon}
-      />
+      <S.Controls>
+        {PDFFile && (
+          <S.ZoomControls>
+            <S.ZoomButton onClick={handleZoomOut}>−</S.ZoomButton>
+            <S.ZoomLevel>{Math.round(scale * 100)}%</S.ZoomLevel>
+            <S.ZoomButton onClick={handleZoomIn}>＋</S.ZoomButton>
+          </S.ZoomControls>
+        )}
+        <Button
+          label="PDF 다운로드"
+          size={ButtonSize.Large}
+          onClick={handlePDFDownload}
+          rounded={false}
+          leftIcon={downloadIcon}
+          disabled={!PDFFile}
+        />
+      </S.Controls>
     </S.ViewerController>
   );
 };

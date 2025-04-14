@@ -7,8 +7,7 @@ import EmptyStampImage from "@/assets/images/stamp_empty.svg";
 const IMAGE_UPLOAD_LIMIT = 5;
 
 const StampUploader = () => {
-  const { selectedStampIndex, setSelectedStampIndex, stamps, addStamp } =
-    usePDF();
+  const { setSelectedStampIndex, stamps, addStamp } = usePDF();
   const stampInputRef = useRef<HTMLInputElement>(null);
 
   const handleStampUpload = () => {
@@ -56,10 +55,12 @@ const StampUploader = () => {
               return (
                 <S.StampImage
                   key={index}
-                  onClick={() =>
-                    stamps[index] ? setSelectedStampIndex(index) : null
-                  }
                   isEmpty={!stamps[index]}
+                  onClick={() =>
+                    stamps[index]
+                      ? setSelectedStampIndex(index)
+                      : handleStampUpload()
+                  }
                 >
                   <img
                     src={!stamps[index] ? EmptyStampImage : stamps[index]}
