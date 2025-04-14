@@ -49,6 +49,7 @@ const PDFUploader = () => {
         <input
           ref={inputRef}
           type="file"
+          accept=".pdf"
           style={{ display: "none" }}
           onChange={handleFileSelect}
         />
