@@ -5,17 +5,20 @@ import PDFViewer from "@/features/PDFViewer";
 import { PDFProvider } from "@/context/usePDFContext/provider.tsx";
 import { ThemeProvider } from "@emotion/react";
 import theme from "@/assets/styles/theme.ts";
+import { DialogProvider } from "@/context/useDialog/provider.tsx";
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <PDFProvider>
-        <Layout
-          children={{
-            fileUploader: <FileUploader />,
-            PDFViewer: <PDFViewer />,
-          }}
-        />
+        <DialogProvider>
+          <Layout
+            children={{
+              fileUploader: <FileUploader />,
+              PDFViewer: <PDFViewer />,
+            }}
+          />
+        </DialogProvider>
       </PDFProvider>
     </ThemeProvider>
   );
