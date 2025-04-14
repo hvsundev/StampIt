@@ -7,7 +7,7 @@ import { useDialog } from "@/context/useDialog";
 const PDF_UPLOAD_LIMIT = 1;
 
 const PDFUploader = () => {
-  const { showConfirm } = useDialog();
+  const { showConfirm, showToast } = useDialog();
   const { PDFFile, setPDFFile, handleInitialize } = usePDFFileManager();
   const inputRef = useRef<HTMLInputElement>(null);
   const [isDragging, setIsDragging] = useState(false);

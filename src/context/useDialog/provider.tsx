@@ -19,7 +19,7 @@ export const DialogProvider = ({ children }: { children: React.ReactNode }) => {
 
   const showToast = (options: ToastOptions) => {
     setToast(options);
-    setTimeout(() => setToast(null), 2000); // 2초 후 자동 사라짐
+    setTimeout(() => setToast(null), 3000);
   };
 
   const handleConfirm = (result: boolean) => {

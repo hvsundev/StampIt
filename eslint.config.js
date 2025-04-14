@@ -1,4 +1,3 @@
-// eslint.config.js
 import globals from "globals";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
@@ -40,7 +39,6 @@ export default tseslint.config(
     },
   },
   {
-    // 일반 JS 설정
     files: ["**/*.{js,jsx}"],
     languageOptions: {
       ecmaVersion: 2020,

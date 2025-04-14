@@ -1,4 +1,3 @@
-// src/types/emotion.d.ts
 import "@emotion/react";
 import { AppTheme } from "@/assets/styles/theme.ts";
 

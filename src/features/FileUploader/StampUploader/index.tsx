@@ -8,7 +8,7 @@ import { useDialog } from "@/context/useDialog";
 const IMAGE_UPLOAD_LIMIT = 5;
 
 const StampUploader = () => {
-  const { setSelectedStampIndex, stamps, addStamp, deleteStamp } =
+  const { PDFFile, setSelectedStampIndex, stamps, addStamp, deleteStamp } =
     usePDFFileManager();
   const { showToast } = useDialog();
   const stampInputRef = useRef<HTMLInputElement>(null);
@@ -68,13 +68,21 @@ const StampUploader = () => {
               key={index}
               index={index}
               stampSrc={stamps[index]}
-              onSelect={() => setSelectedStampIndex(index)}
+              onSelect={() => {
+                if (!PDFFile) {
+                  showToast({
+                    type: "warning",
+                    message: `도장 찍기는 PDF 파일 업로드 후 가능해요`,
+                  });
+                }
+                setSelectedStampIndex(index);
+              }}
               onUpload={handleStampUpload}
               onDelete={() => deleteStamp(index)}
             />
           ))}
         </S.Stamps>
-        <S.Description>* 확장자는 'png'로 제한됩니다.</S.Description>
+        <S.Description>* PNG 파일만 업로드 가능</S.Description>
         <S.Count>
           <span>{`${stamps.length}`}</span>
           {`/${IMAGE_UPLOAD_LIMIT}`}

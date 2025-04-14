@@ -11,21 +11,21 @@ export const ToastWrapper = styled.div<{
   background-color: ${({ type }) => {
     switch (type) {
       case "success":
-        return "#4caf50";
-      case "error":
-        return "#f44336";
       case "info":
-        return "#2196f3";
+        return "rgba(33,150,243,0.7)";
+      case "error":
       case "warning":
-        return "#ff9800";
+        return "rgba(244,67,54,0.7)";
       default:
         return "#333";
     }
   }};
   color: white;
-  padding: 12px 20px;
-  border-radius: 6px;
-  font-size: 14px;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  padding: 12px 24px;
+  border-radius: 12px;
   z-index: 9999;
   opacity: 0.9;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);

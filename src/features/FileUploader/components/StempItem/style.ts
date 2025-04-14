@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 import { disableUserDrag } from "@/assets/styles/mixins.ts";
 
-// 도장 전체 영역
 export const StampImage = styled.div<{
   isEmpty: boolean;
 }>`
@@ -71,7 +70,6 @@ export const StampImage = styled.div<{
   }
 `;
 
-// 삭제 버튼
 export const DeleteButton = styled.button`
   position: absolute;
   top: -6px;
