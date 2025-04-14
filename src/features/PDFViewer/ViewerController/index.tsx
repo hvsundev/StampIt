@@ -1,6 +1,6 @@
 import * as S from "./styles.ts";
 import { usePDF } from "@/context/usePDFContext";
-import Button from "@/components/common/Button/Button.tsx";
+import Button from "@/components/common/Button";
 import { PDFDocument } from "pdf-lib";
 import * as fabric from "fabric";
 import downloadIcon from "@/assets/images/download.svg";

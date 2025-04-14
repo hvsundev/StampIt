@@ -7,3 +7,11 @@ export const disableUserDrag = css`
   -o-user-drag: none;
   user-drag: none;
 `;
+
+export const ellipsis = css`
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+  width: 100%;
+`;

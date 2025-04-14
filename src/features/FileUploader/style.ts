@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
-import { disableUserDrag } from "@/assets/styles/mixins.ts";
+import { disableUserDrag, ellipsis } from "@/assets/styles/mixins.ts";
 
 export const FileUploaderWrapper = styled.div`
   display: flex;
@@ -105,11 +105,7 @@ export const File = styled.div`
   border-radius: 10px;
 
   span {
-    width: 100%;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    display: block;
+    ${ellipsis}
   }
 `;
 

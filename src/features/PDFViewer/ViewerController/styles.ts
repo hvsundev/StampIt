@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { ellipsis } from "@/assets/styles/mixins.ts";
 
 export const ViewerController = styled.div`
   display: flex;
@@ -8,6 +9,8 @@ export const ViewerController = styled.div`
   width: 100%;
   height: 48px;
   background-color: ${({ theme }) => theme.colors.white};
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  z-index: 10;
 `;
 
 export const Controls = styled.div`
@@ -18,9 +21,10 @@ export const Controls = styled.div`
 `;
 
 export const FileName = styled.span`
-  flex: 0 0 50%;
+  flex: 1;
   font-size: 16px;
   font-weight: 700;
+  ${ellipsis}
 `;
 
 export const ZoomControls = styled.div`
