@@ -1,6 +1,6 @@
 import React from "react";
 import { ButtonProps, ButtonSize, ButtonTheme } from "./interface.ts";
-import { ButtonWrapper } from "./style.ts";
+import * as S from "./style.ts";
 
 const Button: React.FC<ButtonProps> = ({
   onClick,
@@ -16,7 +16,7 @@ const Button: React.FC<ButtonProps> = ({
   if (loading) return "로딩 중...";
 
   return (
-    <ButtonWrapper
+    <S.ButtonWrapper
       type={type}
       onClick={disabled || loading ? undefined : onClick}
       disabled={disabled || loading}
@@ -32,7 +32,7 @@ const Button: React.FC<ButtonProps> = ({
         />
       )}
       <span>{label}</span>
-    </ButtonWrapper>
+    </S.ButtonWrapper>
   );
 };
 
