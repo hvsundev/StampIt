@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import * as fabric from "fabric";
 
 import * as S from "./style.ts";
-import Button from "@/components/common/Button/Button.tsx";
+import Button from "@/components/common/Button";
 import { usePDF } from "@/context/usePDFContext";
 import { ButtonTheme } from "@/components/common/Button/interface.ts";
 import PDFPreview from "@/features/PDFViewer/PDFPreview";

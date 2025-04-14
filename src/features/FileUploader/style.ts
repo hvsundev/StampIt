@@ -32,9 +32,13 @@ export const UploadContent = styled.div`
   gap: 8px;
 `;
 
-export const DropArea = styled.div<{ isExistFile: boolean }>`
-  position: relative;
+export const DropArea = styled.div<{
+  isExistFile: boolean;
+  isDragging?: boolean;
+}>`
+  width: 100%;
   height: 80px;
+  position: relative;
   padding: 0 16px;
   border: 1px dashed #ccc;
   border-radius: 8px;
@@ -49,9 +53,16 @@ export const DropArea = styled.div<{ isExistFile: boolean }>`
   font-size: 13px;
   letter-spacing: -0.3px;
 
-  /* 🔵 기본 hover */
-  &:hover {
+  ${({ isDragging }) =>
+    isDragging &&
+    `
+    background-color: #f0f8ff;
     border-color: #1d5aff;
+  `}
+
+  &:hover {
+    border-color: ${({ theme }) => theme.colors.primary};
+    background-color: #f0f8ff;
   }
 
   ${({ isExistFile, theme }) =>
@@ -64,7 +75,7 @@ export const DropArea = styled.div<{ isExistFile: boolean }>`
       justify-content: space-between;
 
       &:hover {
-        border-color: #1d5aff;
+        border-color: ${theme.colors.primary};
         background-color: ${theme.opacityColors.primary_20};
 
         &::after {
@@ -86,12 +97,20 @@ export const DropArea = styled.div<{ isExistFile: boolean }>`
 `;
 
 export const File = styled.div`
+  width: 100%;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
   transition: 0.2s;
-  padding: 8px 12px;
   border-radius: 10px;
+
+  span {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+  }
 `;
 
 export const UploadTitle = styled.div`

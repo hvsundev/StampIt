@@ -18,6 +18,7 @@ export const Controls = styled.div`
 `;
 
 export const FileName = styled.span`
+  flex: 0 0 50%;
   font-size: 16px;
   font-weight: 700;
 `;

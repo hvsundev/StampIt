@@ -1,5 +1,5 @@
 import * as S from "@/features/FileUploader/style.ts";
-import Button from "@/components/common/Button/Button.tsx";
+import Button from "@/components/common/Button";
 import React, { useRef } from "react";
 import { usePDF } from "@/context/usePDFContext";
 import EmptyStampImage from "@/assets/images/stamp_empty.svg";
