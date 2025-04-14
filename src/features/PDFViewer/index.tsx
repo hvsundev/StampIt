@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import * as fabric from "fabric";
 
 import * as S from "./style.ts";
@@ -20,6 +20,7 @@ const PDFViewer = () => {
     PDFFile,
     stamps,
     selectedPDFIndex,
+    setSelectedPDFIndex,
     selectedStampIndex,
     setSelectedStampIndex,
     handleInitialize,
@@ -33,6 +34,7 @@ const PDFViewer = () => {
 
   const [pdfPages, setPdfPages] = useState<string[]>([]);
   const [isExistActiveStamp, setIsExistActiveStamp] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useFabricCanvases({
     PDFFile,
@@ -41,6 +43,8 @@ const PDFViewer = () => {
     canvasRefs,
     setPdfPages,
     handleInitialize,
+    onStart: () => setIsLoading(true),
+    onComplete: () => setIsLoading(false),
   });
 
   useActiveCanvasHandlers({
@@ -99,36 +103,54 @@ const PDFViewer = () => {
     activeCanvas.zoomToPoint(center, scale);
   }, [scale, selectedPDFIndex]);
 
+  const handlePrevPage = () => {
+    setSelectedPDFIndex((prev) => Math.max(prev - 1, 0));
+  };
+
+  const handleNextPage = () => {
+    setSelectedPDFIndex((prev) => Math.min(prev + 1, pdfPages.length - 1));
+  };
+
   return (
     <S.PDFViewerContainer>
-      {/* 뷰어 컨트롤러 */}
       <ViewerController canvasRefs={canvasRefs} />
 
-      {/* 뷰어 */}
       <S.Viewer>
-        <S.CanvasWrapper
-          ref={canvasContainerRef}
-          style={{
-            height: "100%",
-            width: "100%",
-          }}
-        >
+        <S.CanvasWrapper ref={canvasContainerRef}>
           <S.Canvas ref={canvasRef} />
+
+          {isLoading && <S.LoadingOverlay>PDF 로딩 중...</S.LoadingOverlay>}
         </S.CanvasWrapper>
+
+        {PDFFile && (
+          <S.PageController>
+            <S.MoveButton
+              onClick={handlePrevPage}
+              disabled={selectedPDFIndex <= 0}
+            >
+              &lt;
+            </S.MoveButton>
+            <S.MoveButton
+              onClick={handleNextPage}
+              disabled={selectedPDFIndex >= pdfPages.length - 1}
+            >
+              &gt;
+            </S.MoveButton>
+          </S.PageController>
+        )}
 
         <S.FloatingButtonArea isExistActiveStamp={isExistActiveStamp}>
           {isExistActiveStamp && (
             <Button
               label={"삭제"}
-              leftIcon={BinIcon}
               onClick={handleStampDelete}
+              leftIcon={BinIcon}
               theme={ButtonTheme.Secondary}
             />
           )}
         </S.FloatingButtonArea>
       </S.Viewer>
 
-      {/* 썸네일 미리보기 */}
       <S.Preview>
         <PDFPreview />
       </S.Preview>

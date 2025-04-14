@@ -23,11 +23,10 @@ export const ImageWrapper = styled.div<{
   display: flex;
   flex: 0 0 auto;
   flex-direction: column;
-  width: 60px;
+  width: 50px;
   overflow: hidden;
   cursor: pointer;
   transition: border-color 0.3s ease;
-
   border: 2px solid;
   border-color: ${({ isSelected, theme }) =>
     isSelected ? theme.colors.primary : theme.colors.gray};

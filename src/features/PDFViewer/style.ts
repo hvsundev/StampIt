@@ -52,3 +52,50 @@ export const FloatingButtonArea = styled.div<{ isExistActiveStamp: boolean }>`
   opacity: ${({ isExistActiveStamp }) => (isExistActiveStamp ? 1 : 0)};
   transition: opacity 0.3s ease-in-out;
 `;
+
+export const PageController = styled.div`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 24px;
+  width: 100%;
+  font-size: 14px;
+`;
+
+export const MoveButton = styled.button`
+  background: none;
+  border: 1px solid #ccc;
+  width: 40px;
+  height: 40px;
+  padding: 4px 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  color: ${({ theme }) => theme.colors.black};
+  background-color: rgba(240, 240, 240, 0.8);
+
+  &:hover:enabled {
+    background-color: ${({ theme }) => theme.colors.white};
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+`;
+
+export const LoadingOverlay = styled.div`
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 16px;
+  z-index: 10;
+`;

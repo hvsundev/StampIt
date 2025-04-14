@@ -12,7 +12,7 @@ export interface PDFContextType {
   setSelectedStampIndex: (index: number) => void;
 
   selectedPDFIndex: number;
-  setSelectedPDFIndex: (index: number) => void;
+  setSelectedPDFIndex: React.Dispatch<React.SetStateAction<number>>;
 
   scale: number;
   setScale: React.Dispatch<React.SetStateAction<number>>;

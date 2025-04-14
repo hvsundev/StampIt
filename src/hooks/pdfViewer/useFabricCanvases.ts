@@ -10,6 +10,8 @@ export const useFabricCanvases = ({
   canvasRefs,
   setPdfPages,
   handleInitialize,
+  onStart,
+  onComplete,
 }: {
   PDFFile: File | null;
   canvasSize: { FABRIC_CANVAS_WIDTH: number; FABRIC_CANVAS_HEIGHT: number };
@@ -17,6 +19,8 @@ export const useFabricCanvases = ({
   canvasRefs: React.MutableRefObject<fabric.Canvas[]>;
   setPdfPages: (pages: string[]) => void;
   handleInitialize: () => void;
+  onStart?: () => void;
+  onComplete?: () => void;
 }) => {
   const { scale } = usePDFFileManager();
 
@@ -29,6 +33,8 @@ export const useFabricCanvases = ({
     }
 
     (async () => {
+      onStart?.();
+
       const images = await getImagesByFile(PDFFile);
       setPdfPages(images);
 
@@ -53,13 +59,13 @@ export const useFabricCanvases = ({
           const image = new Image();
           image.crossOrigin = "anonymous";
           image.onload = () => {
-            const scale = Math.min(
+            const scaleFactor = Math.min(
               canvasSize.FABRIC_CANVAS_WIDTH / image.width,
               canvasSize.FABRIC_CANVAS_HEIGHT / image.height,
             );
             const fabricImg = new fabric.Image(image, {
-              scaleX: scale,
-              scaleY: scale,
+              scaleX: scaleFactor,
+              scaleY: scaleFactor,
               selectable: false,
               evented: false,
             });
@@ -70,16 +76,19 @@ export const useFabricCanvases = ({
 
         fabricCanvas.backgroundImage = bgImage;
         fabricCanvas.renderAll();
-        newCanvases.push(fabricCanvas);
 
         const center = new fabric.Point(
           fabricCanvas.getWidth() / 2,
           fabricCanvas.getHeight() / 2,
         );
         fabricCanvas.zoomToPoint(center, scale);
+
+        newCanvases.push(fabricCanvas);
       }
 
       canvasRefs.current = newCanvases;
+
+      onComplete?.();
     })();
   }, [PDFFile, canvasSize]);
 };
