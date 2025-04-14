@@ -17,11 +17,21 @@ const ViewerController = ({ canvasRefs }: ViewerControllerProps) => {
     const doc = await PDFDocument.create();
 
     for (const canvas of canvasRefs.current) {
+      canvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
+      canvas.requestRenderAll();
+
+      console.log(canvas.getWidth(), canvas.getHeight());
+
       const dataUrl = canvas.toDataURL();
       const png = await fetch(dataUrl).then((res) => res.arrayBuffer());
       const img = await doc.embedPng(png);
       const page = doc.addPage([img.width, img.height]);
       page.drawImage(img, { x: 0, y: 0, width: img.width, height: img.height });
+
+      canvas.zoomToPoint(
+        new fabric.Point(canvas.getWidth() / 2, canvas.getHeight() / 2),
+        scale,
+      );
     }
 
     const pdfBytes = await doc.save();

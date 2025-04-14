@@ -13,6 +13,8 @@ import { useFabricCanvases } from "@/hooks/pdfViewer/useFabricCanvases.ts";
 import { useCanvasSize } from "@/hooks/pdfViewer/useCanvasSize.ts";
 
 const PDFViewer = () => {
+  useCanvasSize();
+
   const {
     PDFFile,
     stamps,
@@ -20,15 +22,16 @@ const PDFViewer = () => {
     selectedStampIndex,
     setSelectedStampIndex,
     handleInitialize,
+    canvasSize,
+    scale,
   } = usePDF();
+
   const canvasRef = useRef<HTMLDivElement>(null);
   const canvasContainerRef = useRef<HTMLDivElement>(null);
   const canvasRefs = useRef<fabric.Canvas[]>([]);
 
   const [pdfPages, setPdfPages] = useState<string[]>([]);
   const [isExistActiveStamp, setIsExistActiveStamp] = useState(false);
-
-  const canvasSize = useCanvasSize(canvasContainerRef);
 
   useFabricCanvases({
     PDFFile,
@@ -82,6 +85,18 @@ const PDFViewer = () => {
     mountCanvas(container, activeCanvas);
   }, [selectedPDFIndex]);
 
+  useEffect(() => {
+    const activeCanvas = canvasRefs.current[selectedPDFIndex];
+    if (!activeCanvas) return;
+
+    const center = new fabric.Point(
+      activeCanvas.getWidth() / 2,
+      activeCanvas.getHeight() / 2,
+    );
+
+    activeCanvas.zoomToPoint(center, scale);
+  }, [scale, selectedPDFIndex]);
+
   return (
     <S.PDFViewerContainer>
       {/* 뷰어 컨트롤러 */}
@@ -91,7 +106,10 @@ const PDFViewer = () => {
       <S.Viewer>
         <S.CanvasWrapper
           ref={canvasContainerRef}
-          style={{ height: "100%", width: "100%" }}
+          style={{
+            height: "100%",
+            width: "100%",
+          }}
         >
           <S.Canvas ref={canvasRef} />
         </S.CanvasWrapper>

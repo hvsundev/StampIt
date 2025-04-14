@@ -18,4 +18,15 @@ export interface PDFContextType {
   setScale: React.Dispatch<React.SetStateAction<number>>;
 
   handleInitialize: () => void;
+
+  canvasSize: {
+    FABRIC_CANVAS_WIDTH: number;
+    FABRIC_CANVAS_HEIGHT: number;
+  };
+  setCanvasSize: React.Dispatch<
+    React.SetStateAction<{
+      FABRIC_CANVAS_WIDTH: number;
+      FABRIC_CANVAS_HEIGHT: number;
+    }>
+  >;
 }

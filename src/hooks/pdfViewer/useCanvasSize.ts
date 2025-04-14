@@ -1,24 +1,28 @@
-import { useEffect, useState, RefObject } from "react";
+import { useEffect } from "react";
+import { usePDF } from "@/context/usePDFContext";
+import { getImagesByFile } from "@/utils/utils";
 
-export const useCanvasSize = (
-  containerRef: RefObject<HTMLDivElement | null>,
-) => {
-  const [canvasSize, setCanvasSize] = useState({
-    FABRIC_CANVAS_WIDTH: 0,
-    FABRIC_CANVAS_HEIGHT: 0,
-  });
+export const useCanvasSize = () => {
+  const { PDFFile, setCanvasSize } = usePDF();
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    if (!PDFFile) return;
 
-    const height = containerRef.current.clientHeight;
-    const width = height / Math.sqrt(2); // A4 비율
+    const loadImageSize = async () => {
+      const images = await getImagesByFile(PDFFile);
+      if (!images || images.length === 0) return;
 
-    setCanvasSize({
-      FABRIC_CANVAS_WIDTH: parseFloat(width.toFixed(2)),
-      FABRIC_CANVAS_HEIGHT: parseFloat(height.toFixed(2)),
-    });
-  }, [containerRef]);
+      const img = new Image();
+      img.src = images[0];
 
-  return canvasSize;
+      img.onload = () => {
+        setCanvasSize({
+          FABRIC_CANVAS_WIDTH: img.width,
+          FABRIC_CANVAS_HEIGHT: img.height,
+        });
+      };
+    };
+
+    loadImageSize();
+  }, [PDFFile, setCanvasSize]);
 };

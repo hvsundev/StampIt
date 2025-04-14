@@ -7,9 +7,14 @@ export const PDFProvider: React.FC<{ children: React.ReactNode }> = ({
   const [PDFFile, setPDFFile] = useState<File | null>(null);
 
   const [stamps, setStamps] = useState<string[]>([]);
-  const [scale, setScale] = useState<number>(1);
+  const [scale, setScale] = useState<number>(0.5);
   const [selectedStampIndex, setSelectedStampIndex] = useState<number>(-1);
   const [selectedPDFIndex, setSelectedPDFIndex] = useState<number>(0);
+
+  const [canvasSize, setCanvasSize] = useState({
+    FABRIC_CANVAS_WIDTH: 0,
+    FABRIC_CANVAS_HEIGHT: 0,
+  });
 
   const addStamp = (stamp: string) => {
     if (!stamp) return;
@@ -30,10 +35,6 @@ export const PDFProvider: React.FC<{ children: React.ReactNode }> = ({
     setSelectedStampIndex(-1);
   };
 
-  useEffect(() => {
-    console.log(selectedPDFIndex);
-  }, [selectedPDFIndex]);
-
   return (
     <PDFContext.Provider
       value={{
@@ -49,6 +50,8 @@ export const PDFProvider: React.FC<{ children: React.ReactNode }> = ({
         handleInitialize,
         scale,
         setScale,
+        canvasSize,
+        setCanvasSize,
       }}
     >
       {children}
