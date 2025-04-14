@@ -23,6 +23,6 @@ export const PDFViewerWrapper = styled.div`
   flex: 1;
   width: 100%;
   overflow: hidden;
-  border-top-right-radius: 20px;
+  border-top-right-radius: 10px;
   border-bottom-right-radius: 20px;
 `;

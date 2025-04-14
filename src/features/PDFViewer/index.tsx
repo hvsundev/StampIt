@@ -118,11 +118,13 @@ const PDFViewer = () => {
       <S.Viewer>
         <S.CanvasWrapper ref={canvasContainerRef}>
           <S.Canvas ref={canvasRef} />
-          {isLoading && <S.LoadingOverlay>PDF 로딩 중...</S.LoadingOverlay>}
+          {isLoading && (
+            <S.CanvasLoadingOverlay>PDF 로딩 중...</S.CanvasLoadingOverlay>
+          )}
         </S.CanvasWrapper>
 
         {PDFFile && (
-          <S.PageController>
+          <S.PageNavControls>
             <S.MoveButton
               onClick={handlePrevPage}
               disabled={selectedPDFIndex <= 0}
@@ -135,10 +137,10 @@ const PDFViewer = () => {
             >
               &gt;
             </S.MoveButton>
-          </S.PageController>
+          </S.PageNavControls>
         )}
 
-        <S.FloatingButtonArea isExistActiveStamp={isExistActiveStamp}>
+        <S.StampActionBar isExistActiveStamp={isExistActiveStamp}>
           {isExistActiveStamp && (
             <Button
               label={"삭제"}
@@ -147,7 +149,7 @@ const PDFViewer = () => {
               theme={ButtonTheme.Secondary}
             />
           )}
-        </S.FloatingButtonArea>
+        </S.StampActionBar>
       </S.Viewer>
 
       <S.Preview>

@@ -38,10 +38,9 @@ export const Canvas = styled.div`
   height: 100%;
   display: flex;
   justify-content: center;
-  z-index: 1;
 `;
 
-export const FloatingButtonArea = styled.div<{ isExistActiveStamp: boolean }>`
+export const StampActionBar = styled.div<{ isExistActiveStamp: boolean }>`
   position: absolute;
   display: flex;
   justify-content: center;
@@ -49,12 +48,11 @@ export const FloatingButtonArea = styled.div<{ isExistActiveStamp: boolean }>`
   right: 0;
   gap: 10px;
   bottom: 30px;
-  z-index: 1;
   opacity: ${({ isExistActiveStamp }) => (isExistActiveStamp ? 1 : 0)};
   transition: opacity 0.3s ease-in-out;
 `;
 
-export const PageController = styled.div`
+export const PageNavControls = styled.div`
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -64,10 +62,10 @@ export const PageController = styled.div`
   padding: 0 24px;
   width: 100%;
   font-size: 14px;
+  pointer-events: none;
 `;
 
 export const MoveButton = styled.button`
-  background: none;
   border: 1px solid #ccc;
   width: 40px;
   height: 40px;
@@ -78,6 +76,7 @@ export const MoveButton = styled.button`
   font-weight: bold;
   color: ${({ theme }) => theme.colors.black};
   background-color: rgba(240, 240, 240, 0.8);
+  pointer-events: auto;
 
   &:hover:enabled {
     background-color: ${({ theme }) => theme.colors.white};
@@ -89,7 +88,7 @@ export const MoveButton = styled.button`
   }
 `;
 
-export const LoadingOverlay = styled.div`
+export const CanvasLoadingOverlay = styled.div`
   position: absolute;
   inset: 0;
   background: rgba(255, 255, 255, 0.7);

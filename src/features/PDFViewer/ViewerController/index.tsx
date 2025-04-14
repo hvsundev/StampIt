@@ -5,6 +5,7 @@ import { PDFDocument } from "pdf-lib";
 import * as fabric from "fabric";
 import downloadIcon from "@/assets/images/download.svg";
 import { ButtonSize } from "@/components/common/Button/interface.ts";
+import { useCallback, useState } from "react";
 
 interface ViewerControllerProps {
   canvasRefs: React.MutableRefObject<fabric.Canvas[]>;
@@ -12,43 +13,57 @@ interface ViewerControllerProps {
 
 const ViewerController = ({ canvasRefs }: ViewerControllerProps) => {
   const { PDFFile, scale, setScale } = usePDFFileManager();
+  const [isDownloading, setIsDownloading] = useState(false);
 
   const handlePDFDownload = async () => {
-    const doc = await PDFDocument.create();
+    if (!PDFFile || isDownloading) return;
+    setIsDownloading(true);
 
-    for (const canvas of canvasRefs.current) {
-      canvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
-      canvas.requestRenderAll();
+    try {
+      const doc = await PDFDocument.create();
 
-      console.log(canvas.getWidth(), canvas.getHeight());
+      for (const canvas of canvasRefs.current) {
+        canvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
+        canvas.requestRenderAll();
 
-      const dataUrl = canvas.toDataURL();
-      const png = await fetch(dataUrl).then((res) => res.arrayBuffer());
-      const img = await doc.embedPng(png);
-      const page = doc.addPage([img.width, img.height]);
-      page.drawImage(img, { x: 0, y: 0, width: img.width, height: img.height });
+        const dataUrl = canvas.toDataURL();
+        const png = await fetch(dataUrl).then((res) => res.arrayBuffer());
+        const img = await doc.embedPng(png);
+        const page = doc.addPage([img.width, img.height]);
+        page.drawImage(img, {
+          x: 0,
+          y: 0,
+          width: img.width,
+          height: img.height,
+        });
 
-      canvas.zoomToPoint(
-        new fabric.Point(canvas.getWidth() / 2, canvas.getHeight() / 2),
-        scale,
-      );
+        canvas.zoomToPoint(
+          new fabric.Point(canvas.getWidth() / 2, canvas.getHeight() / 2),
+          scale,
+        );
+      }
+
+      const pdfBytes = await doc.save();
+      const blob = new Blob([pdfBytes], { type: "application/pdf" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "stamped.pdf";
+      link.click();
+    } catch (error) {
+      alert("PDF 다운로드 중 오류가 발생했습니다.");
+      console.error(error);
+    } finally {
+      setIsDownloading(false);
     }
-
-    const pdfBytes = await doc.save();
-    const blob = new Blob([pdfBytes], { type: "application/pdf" });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = "stamped.pdf";
-    link.click();
   };
 
-  const handleZoomIn = () => {
-    setScale((prev) => Math.min(prev + 0.1, 2)); // 최대 2배
-  };
+  const handleZoomIn = useCallback(() => {
+    setScale((prev) => Math.min(prev + 0.1, 2));
+  }, [setScale]);
 
-  const handleZoomOut = () => {
-    setScale((prev) => Math.max(prev - 0.1, 0.2)); // 최소 0.2배
-  };
+  const handleZoomOut = useCallback(() => {
+    setScale((prev) => Math.max(prev - 0.1, 0.2));
+  }, [setScale]);
 
   return (
     <S.ViewerController>
@@ -67,7 +82,7 @@ const ViewerController = ({ canvasRefs }: ViewerControllerProps) => {
           onClick={handlePDFDownload}
           rounded={false}
           leftIcon={downloadIcon}
-          disabled={!PDFFile}
+          disabled={!PDFFile || isDownloading}
         />
       </S.Controls>
     </S.ViewerController>

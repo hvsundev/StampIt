@@ -50,6 +50,7 @@ export const ZoomButton = styled.button`
 export const ZoomLevel = styled.span`
   min-width: 48px;
   text-align: center;
+  font-size: 14px;
   font-weight: 500;
   color: #444;
 `;
