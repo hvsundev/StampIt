@@ -5,9 +5,8 @@ import { useDialog } from "@/context/useDialog";
 import DropZone from "@/features/FileUploader/components/DropZone";
 import StepTitle from "@/features/FileUploader/components/StepTitle";
 import Count from "@/features/FileUploader/components/Count";
-import Button from "@/components/common/Button";
-
-const PDF_UPLOAD_LIMIT = 1;
+import Button from "@/components/shared/Button";
+import { PDF_UPLOAD_LIMIT } from "@/constants/limits.ts";
 
 const PDFUploader = () => {
   const { showConfirm, showToast } = useDialog();

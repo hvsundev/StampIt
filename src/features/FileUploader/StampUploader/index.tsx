@@ -1,13 +1,12 @@
 import * as S from "./style.ts";
-import Button from "@/components/common/Button";
+import Button from "@/components/shared/Button";
 import React, { useRef } from "react";
 import { usePDFFileManager } from "@/context/usePDFFileManager";
 import StampItem from "@/features/FileUploader/components/StampItem";
 import { useDialog } from "@/context/useDialog";
 import Count from "@/features/FileUploader/components/Count";
 import StepTitle from "@/features/FileUploader/components/StepTitle";
-
-const IMAGE_UPLOAD_LIMIT = 5;
+import { IMAGE_UPLOAD_LIMIT } from "@/constants/limits.ts";
 
 const StampUploader = () => {
   const { PDFFile, setSelectedStampIndex, stamps, addStamp, deleteStamp } =

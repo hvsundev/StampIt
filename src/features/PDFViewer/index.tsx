@@ -2,9 +2,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import * as fabric from "fabric";
 
 import * as S from "./style.ts";
-import Button from "@/components/common/Button";
+import Button from "@/components/shared/Button";
 import { usePDFFileManager } from "@/context/usePDFFileManager";
-import { ButtonTheme } from "@/components/common/Button/interface.ts";
+import { ButtonTheme } from "@/components/shared/Button/interface.ts";
 import PDFPreview from "@/features/PDFViewer/PDFPreview";
 import ViewerController from "@/features/PDFViewer/ViewerController";
 import { useStampInserter } from "@/hooks/pdfViewer/useStampInserter.ts";

@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import * as S from "./style.ts";
-import Button from "@/components/common/Button";
-import { ButtonTheme } from "@/components/common/Button/interface";
+import Button from "@/components/shared/Button";
+import { ButtonTheme } from "@/components/shared/Button/interface";
 
 interface ConfirmProps {
   title: string;

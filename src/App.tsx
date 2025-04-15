@@ -1,4 +1,4 @@
-import Layout from "@/components/layout";
+import Layout from "@/components/shared/layout";
 import FileUploader from "@/features/FileUploader";
 import PDFViewer from "@/features/PDFViewer";
 

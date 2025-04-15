@@ -1,10 +1,10 @@
 import * as S from "./styles.ts";
 import { usePDFFileManager } from "@/context/usePDFFileManager";
-import Button from "@/components/common/Button";
+import Button from "@/components/shared/Button";
 import { PDFDocument } from "pdf-lib";
 import * as fabric from "fabric";
 import downloadIcon from "@/assets/images/download.svg";
-import { ButtonSize } from "@/components/common/Button/interface.ts";
+import { ButtonSize } from "@/components/shared/Button/interface.ts";
 import { useCallback, useState } from "react";
 
 interface ViewerControllerProps {

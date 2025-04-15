@@ -1,8 +1,8 @@
 import { useState } from "react";
 import DialogContext from "./context";
 import { ConfirmOptions, ToastOptions } from "./interface";
-import Confirm from "@/components/common/Confirm";
-import Toast from "@/components/common/Toast";
+import Confirm from "@/components/shared/Confirm";
+import Toast from "@/components/shared/Toast";
 
 export const DialogProvider = ({ children }: { children: React.ReactNode }) => {
   const [confirm, setConfirm] = useState<

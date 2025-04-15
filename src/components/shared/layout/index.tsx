@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import * as S from "@/components/layout/styles.tsx";
+import * as S from "@/components/shared/layout/styles.tsx";
 
 type LayoutProps = {
   children: {
