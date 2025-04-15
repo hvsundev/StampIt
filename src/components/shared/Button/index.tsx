@@ -26,8 +26,8 @@ const Button: React.FC<ButtonProps> = ({
     >
       {leftIcon && (
         <img
-          src={leftIcon}
-          alt=""
+          src={leftIcon.src}
+          alt={leftIcon.alt}
           style={{ marginRight: 6, width: 16, height: 16 }}
         />
       )}

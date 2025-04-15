@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import * as S from "@/features/FileUploader/style.ts";
+import * as S from "./style.ts";
 import { usePDFFileManager } from "@/context/usePDFFileManager";
 import { useDialog } from "@/context/useDialog";
 import DropZone from "@/features/FileUploader/components/DropZone";

@@ -40,6 +40,12 @@ const StampUploader = () => {
     };
     reader.readAsDataURL(file);
     e.target.value = "";
+    reader.onerror = () => {
+      showToast({
+        type: "error",
+        message: "이미지를 읽는 중 오류가 발생했어요",
+      });
+    };
   };
 
   return (

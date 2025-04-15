@@ -3,9 +3,10 @@ import { usePDFFileManager } from "@/context/usePDFFileManager";
 import Button from "@/components/shared/Button";
 import { PDFDocument } from "pdf-lib";
 import * as fabric from "fabric";
-import downloadIcon from "@/assets/images/download.svg";
+import DownloadIcon from "@/assets/images/download.svg";
 import { ButtonSize } from "@/components/shared/Button/interface.ts";
 import { useCallback, useState } from "react";
+import { useDialog } from "@/context/useDialog";
 
 interface ViewerControllerProps {
   canvasRefs: React.MutableRefObject<fabric.Canvas[]>;
@@ -13,6 +14,7 @@ interface ViewerControllerProps {
 
 const ViewerController = ({ canvasRefs }: ViewerControllerProps) => {
   const { PDFFile, scale, setScale } = usePDFFileManager();
+  const { showToast } = useDialog();
   const [isDownloading, setIsDownloading] = useState(false);
 
   const handlePDFDownload = async () => {
@@ -49,8 +51,12 @@ const ViewerController = ({ canvasRefs }: ViewerControllerProps) => {
       link.href = URL.createObjectURL(blob);
       link.download = "stamped.pdf";
       link.click();
+      URL.revokeObjectURL(URL.createObjectURL(blob));
     } catch (error) {
-      alert("PDF 다운로드 중 오류가 발생했습니다.");
+      showToast({
+        type: "error",
+        message: "PDF 다운로드 중 오류가 발생했어요",
+      });
       console.error(error);
     } finally {
       setIsDownloading(false);
@@ -81,7 +87,7 @@ const ViewerController = ({ canvasRefs }: ViewerControllerProps) => {
           size={ButtonSize.Large}
           onClick={handlePDFDownload}
           rounded={false}
-          leftIcon={downloadIcon}
+          leftIcon={{ src: DownloadIcon, alt: "다운로드 아이콘" }}
           disabled={!PDFFile || isDownloading}
         />
       </S.Controls>

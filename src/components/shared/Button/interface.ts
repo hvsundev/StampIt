@@ -19,5 +19,8 @@ export interface ButtonProps {
   rounded?: boolean;
   disabled?: boolean;
   loading?: boolean;
-  leftIcon?: string;
+  leftIcon?: {
+    src: string;
+    alt: string;
+  };
 }

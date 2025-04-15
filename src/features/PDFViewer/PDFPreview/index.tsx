@@ -23,7 +23,7 @@ const PDFPreview = () => {
   return (
     <S.Wrapper>
       {fileImages?.map((image, index) => (
-        <S.PreviewInfo>
+        <S.PreviewInfo key={index}>
           <S.ImageWrapper
             onClick={() => setSelectedPDFIndex(index)}
             isSelected={selectedPDFIndex === index}

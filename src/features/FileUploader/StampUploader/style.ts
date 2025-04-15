@@ -10,7 +10,6 @@ export const UploadHeader = styled.div`
 
 export const UploadContent = styled.div`
   display: flex;
-  flex-flow: wrap;
   flex-direction: column;
   gap: 8px;
 `;

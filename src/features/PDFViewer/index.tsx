@@ -7,10 +7,10 @@ import { usePDFFileManager } from "@/context/usePDFFileManager";
 import { ButtonTheme } from "@/components/shared/Button/interface.ts";
 import PDFPreview from "@/features/PDFViewer/PDFPreview";
 import ViewerController from "@/features/PDFViewer/ViewerController";
-import { useStampInserter } from "@/hooks/pdfViewer/useStampInserter.ts";
-import { useActiveCanvasHandlers } from "@/hooks/pdfViewer/useActiveCanvasHandlers.ts";
-import { useFabricCanvases } from "@/hooks/pdfViewer/useFabricCanvases.ts";
-import { useCanvasSize } from "@/hooks/pdfViewer/useCanvasSize.ts";
+import { useStampInserter } from "@/hooks/PDFViewer/useStampInserter.ts";
+import { useActiveCanvasHandlers } from "@/hooks/PDFViewer/useActiveCanvasHandlers.ts";
+import { useFabricCanvases } from "@/hooks/PDFViewer/useFabricCanvases.ts";
+import { useCanvasSize } from "@/hooks/PDFViewer/useCanvasSize.ts";
 import BinIcon from "@/assets/images/bin.svg";
 
 const PDFViewer = () => {
@@ -145,7 +145,7 @@ const PDFViewer = () => {
             <Button
               label={"삭제"}
               onClick={handleStampDelete}
-              leftIcon={BinIcon}
+              leftIcon={{ src: BinIcon, alt: "삭제 아이콘" }}
               theme={ButtonTheme.Secondary}
             />
           )}

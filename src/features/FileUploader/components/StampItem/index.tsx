@@ -12,7 +12,6 @@ interface StampItemProps {
 }
 
 const StampItem: React.FC<StampItemProps> = ({
-  index,
   stampSrc,
   onSelect,
   onUpload,
@@ -36,10 +35,10 @@ const StampItem: React.FC<StampItemProps> = ({
             onDelete();
           }}
         >
-          <img src={DeleteIcon} alt="delete-stamp" />
+          <img src={DeleteIcon} alt="삭제 아이콘" />
         </S.DeleteButton>
       )}
-      <img src={stampSrc || EmptyStampImage} alt={`stamp-${index}`} />
+      <img src={stampSrc || EmptyStampImage} alt="no-image" />
     </S.StampImage>
   );
 };

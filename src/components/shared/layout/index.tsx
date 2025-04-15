@@ -13,8 +13,10 @@ const Layout = ({ children }: LayoutProps) => {
 
   return (
     <S.Container>
-      <S.FileUploaderWrapper>{fileUploader}</S.FileUploaderWrapper>
-      <S.PDFViewerWrapper>{PDFViewer}</S.PDFViewerWrapper>
+      <S.ContentWrapper>
+        <S.FileUploaderWrapper>{fileUploader}</S.FileUploaderWrapper>
+        <S.PDFViewerWrapper>{PDFViewer}</S.PDFViewerWrapper>
+      </S.ContentWrapper>
     </S.Container>
   );
 };

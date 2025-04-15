@@ -10,7 +10,6 @@ export const ViewerController = styled.div`
   height: 48px;
   background-color: ${({ theme }) => theme.colors.white};
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  z-index: 10;
 `;
 
 export const Controls = styled.div`
@@ -38,7 +37,7 @@ export const ZoomButton = styled.button`
   font-size: 16px;
   font-weight: 500;
   background-color: ${({ theme }) => theme.colors.white};
-  border: 1px solid #ccc;
+  border: 1px solid ${({ theme }) => theme.colors.paleGray};
   border-radius: 4px;
   cursor: pointer;
 
@@ -52,5 +51,5 @@ export const ZoomLevel = styled.span`
   text-align: center;
   font-size: 14px;
   font-weight: 500;
-  color: #444;
+  color: ${({ theme }) => theme.colors.black};
 `;
