@@ -7,6 +7,6 @@ export const Count = styled.span`
 
   span {
     font-weight: 700;
-    color: ${({ theme }) => theme.colors.primary};
+    color: ${({ theme }) => theme.colors.primary[500]};
   }
 `;

@@ -23,5 +23,5 @@ export const Stamps = styled.div`
 
 export const Description = styled.span`
   font-size: 12px;
-  color: ${({ theme }) => theme.colors.deepGray};
+  color: ${({ theme }) => theme.colors.gray[400]};
 `;

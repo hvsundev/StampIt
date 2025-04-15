@@ -1,9 +1,11 @@
 import { useEffect } from "react";
 import { usePDFFileManager } from "@/context/usePDFFileManager";
 import { getImagesByFile } from "@/utils/utils";
+import { useDialog } from "@/context/useDialog";
 
 export const useCanvasSize = () => {
   const { PDFFile, setCanvasSize } = usePDFFileManager();
+  const { showToast } = useDialog();
 
   useEffect(() => {
     if (!PDFFile) return;
@@ -19,6 +21,12 @@ export const useCanvasSize = () => {
         setCanvasSize({
           FABRIC_CANVAS_WIDTH: img.width,
           FABRIC_CANVAS_HEIGHT: img.height,
+        });
+      };
+      img.onerror = () => {
+        showToast({
+          type: "warning",
+          message: "미리보기 로딩에 실패했어요",
         });
       };
     };

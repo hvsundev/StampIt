@@ -29,7 +29,7 @@ export const ImageWrapper = styled.div<{
   transition: border-color 0.3s ease;
   border: 2px solid;
   border-color: ${({ isSelected, theme }) =>
-    isSelected ? theme.colors.primary : theme.colors.gray};
+    isSelected ? theme.colors.primary[500] : theme.colors.gray[200]};
 `;
 
 export const PreviewImage = styled.img`

@@ -31,7 +31,7 @@ export const DropArea = styled.div<{
   `}
 
   &:hover {
-    border-color: ${({ theme }) => theme.colors.primary};
+    border-color: ${({ theme }) => theme.colors.primary[500]};
     background-color: #f0f8ff;
   }
 
@@ -45,9 +45,9 @@ export const DropArea = styled.div<{
       justify-content: space-between;
 
       &:hover {
-        border-color: ${theme.colors.primary};
-        background-color: ${theme.opacityColors.primary_20};
-        color: ${theme.colors.black};
+        border-color: ${theme.colors.primary[500]};
+        background-color: ${theme.colors.primary.opacity20};
+        color: ${theme.colors.base.black};
 
         &::after {
           position: absolute;

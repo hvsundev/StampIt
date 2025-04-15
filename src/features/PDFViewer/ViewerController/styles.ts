@@ -8,8 +8,8 @@ export const ViewerController = styled.div`
   padding-left: 24px;
   width: 100%;
   height: 48px;
-  background-color: ${({ theme }) => theme.colors.white};
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  background-color: ${({ theme }) => theme.colors.base.white};
+  box-shadow: 0 2px 8px ${({ theme }) => theme.colors.gray.opacity10};
 `;
 
 export const Controls = styled.div`
@@ -36,13 +36,13 @@ export const ZoomButton = styled.button`
   padding: 4px 8px;
   font-size: 16px;
   font-weight: 500;
-  background-color: ${({ theme }) => theme.colors.white};
-  border: 1px solid ${({ theme }) => theme.colors.paleGray};
+  background-color: ${({ theme }) => theme.colors.base.white};
+  border: 1px solid ${({ theme }) => theme.colors.gray[100]};
   border-radius: 4px;
   cursor: pointer;
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.paleGray};
+    background-color: ${({ theme }) => theme.colors.gray[100]};
   }
 `;
 
@@ -51,5 +51,5 @@ export const ZoomLevel = styled.span`
   text-align: center;
   font-size: 14px;
   font-weight: 500;
-  color: ${({ theme }) => theme.colors.black};
+  color: ${({ theme }) => theme.colors.base.black};
 `;

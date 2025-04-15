@@ -4,7 +4,7 @@ export const FileUploaderWrapper = styled.div`
   display: flex;
   height: 100%;
   flex-direction: column;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.base.white};
 `;
 
 export const FileUploaderSection = styled.div`

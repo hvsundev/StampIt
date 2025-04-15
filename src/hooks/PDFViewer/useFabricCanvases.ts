@@ -32,6 +32,7 @@ export const useFabricCanvases = ({
       return;
     }
 
+    // 캔버스 그리기
     (async () => {
       onStart?.();
 
@@ -55,6 +56,7 @@ export const useFabricCanvases = ({
         });
         fabricCanvas.defaultCursor = "move";
 
+        // 배경 이미지 생성 후 캔버스에 부착
         const bgImage = await new Promise<fabric.Image>((resolve) => {
           const image = new Image();
           image.crossOrigin = "anonymous";
@@ -77,6 +79,7 @@ export const useFabricCanvases = ({
         fabricCanvas.backgroundImage = bgImage;
         fabricCanvas.renderAll();
 
+        // zoom point 생성
         const center = new fabric.Point(
           fabricCanvas.getWidth() / 2,
           fabricCanvas.getHeight() / 2,

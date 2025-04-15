@@ -14,14 +14,14 @@ export const Viewer = styled.div`
   position: relative;
   width: 100%;
   height: calc(80% - 48px);
-  background-color: ${({ theme }) => theme.colors.deepGray};
+  background-color: ${({ theme }) => theme.colors.gray[400]};
 `;
 
 export const Preview = styled.div`
   width: 100%;
   height: 20%;
-  border-top: 1px solid ${({ theme }) => theme.colors.gray};
-  background-color: ${({ theme }) => theme.colors.white};
+  border-top: 1px solid ${({ theme }) => theme.colors.gray[200]};
+  background-color: ${({ theme }) => theme.colors.base.white};
 `;
 
 export const CanvasWrapper = styled.div`
@@ -59,14 +59,13 @@ export const PageNavControls = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 16px;
-  padding: 0 24px;
+  padding: 0 30px;
   width: 100%;
   font-size: 14px;
   pointer-events: none;
 `;
 
 export const MoveButton = styled.button`
-  border: 1px solid #ccc;
   width: 40px;
   height: 40px;
   padding: 4px 12px;
@@ -74,12 +73,14 @@ export const MoveButton = styled.button`
   cursor: pointer;
   font-size: 16px;
   font-weight: bold;
-  color: ${({ theme }) => theme.colors.black};
-  background-color: rgba(240, 240, 240, 0.8);
+  color: ${({ theme }) => theme.colors.base.black};
+  transition: 0.1s;
+  background-color: ${({ theme }) => theme.colors.gray.opacity30};
   pointer-events: auto;
+  opacity: 0.6;
 
   &:hover:enabled {
-    background-color: ${({ theme }) => theme.colors.white};
+    opacity: 1;
   }
 
   &:disabled {

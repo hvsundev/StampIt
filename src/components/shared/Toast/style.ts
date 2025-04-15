@@ -8,19 +8,19 @@ export const ToastWrapper = styled.div<{
   ${({ position }) => (position === "top" ? "top: 15%;" : "bottom: 15%;")}
   left: 50%;
   transform: translateX(-50%);
-  background-color: ${({ type }) => {
+  background-color: ${({ type, theme }) => {
     switch (type) {
       case "success":
       case "info":
-        return "rgba(33,150,243,0.7)";
+        return theme.colors.primary[500];
       case "error":
       case "warning":
-        return "rgba(244,67,54,0.7)";
+        return theme.colors.red[500];
       default:
         return "#333";
     }
   }};
-  color: white;
+  color: ${({ theme }) => theme.colors.base.white};
   font-size: 16px;
   font-weight: 700;
   letter-spacing: -0.3px;
@@ -28,5 +28,5 @@ export const ToastWrapper = styled.div<{
   border-radius: 12px;
   z-index: 9999;
   opacity: 0.9;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: ${({ theme }) => theme.colors.gray.opacity70};
 `;

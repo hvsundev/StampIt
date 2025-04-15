@@ -10,7 +10,7 @@ export const StampImage = styled.div<{ isEmpty: boolean }>`
   aspect-ratio: 1;
   border-radius: 8px;
   user-select: none;
-  border: 1px solid ${({ theme }) => theme.colors.paleGray};
+  border: 1px solid ${({ theme }) => theme.colors.gray[100]};
   cursor: pointer;
   transition:
     background-color 0.2s,
@@ -29,8 +29,8 @@ export const StampImage = styled.div<{ isEmpty: boolean }>`
 
   &:hover {
     border-color: ${({ theme, isEmpty }) =>
-      isEmpty ? theme.colors.gray : theme.colors.primary};
-    background-color: ${({ theme }) => theme.opacityColors.paleGray_50};
+      isEmpty ? theme.colors.gray : theme.colors.primary[500]};
+    background-color: ${({ theme }) => theme.colors.gray.opacity50};
 
     ${({ isEmpty, theme }) =>
       !isEmpty &&
@@ -45,7 +45,7 @@ export const StampImage = styled.div<{ isEmpty: boolean }>`
           display: flex;
           justify-content: center;
           align-items: center;
-          background-color: ${theme.opacityColors.primary_20};
+          background-color: ${theme.colors.gray.opacity50};
           background-image: url('src/assets/images/stamp.svg');         
           background-repeat: no-repeat;
           background-position: center;
@@ -56,13 +56,13 @@ export const StampImage = styled.div<{ isEmpty: boolean }>`
   }
 
   &:active {
-    background-color: ${({ theme }) => theme.colors.paleGray};
+    background-color: ${({ theme }) => theme.colors.gray[100]};
 
     ${({ isEmpty, theme }) =>
       !isEmpty &&
       `
         &::after {
-          background-color: ${theme.opacityColors.primary_30};
+          background-color: ${theme.colors.primary.opacity30};
         }
       `}
   }

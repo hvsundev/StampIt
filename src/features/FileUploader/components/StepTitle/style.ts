@@ -18,7 +18,7 @@ export const StepNumbering = styled.span`
   font-size: 14px;
   font-weight: 700;
   color: white;
-  background-color: ${({ theme }) => theme.colors.black};
+  background-color: ${({ theme }) => theme.colors.base.black};
   border-radius: 50%;
   width: 20px;
   height: 20px;
