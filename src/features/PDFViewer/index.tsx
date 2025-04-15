@@ -140,7 +140,7 @@ const PDFViewer = () => {
           </S.PageNavControls>
         )}
 
-        <S.StampActionBar isExistActiveStamp={isExistActiveStamp}>
+        <S.StampActionBar isExistActiveStamp={!!PDFFile && isExistActiveStamp}>
           {isExistActiveStamp && (
             <Button
               label={"삭제"}

@@ -14,8 +14,8 @@ export const FileUploaderWrapper = styled.div`
   width: 100%;
   flex-shrink: 0;
   border-right: 1px solid ${({ theme }) => theme.colors.gray};
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
   overflow: hidden;
 `;
 
@@ -24,5 +24,5 @@ export const PDFViewerWrapper = styled.div`
   width: 100%;
   overflow: hidden;
   border-top-right-radius: 10px;
-  border-bottom-right-radius: 20px;
+  border-bottom-right-radius: 10px;
 `;
