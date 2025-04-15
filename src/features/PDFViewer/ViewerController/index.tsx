@@ -13,9 +13,9 @@ interface ViewerControllerProps {
 }
 
 const ViewerController = ({ canvasRefs }: ViewerControllerProps) => {
-  const { PDFFile, scale, setScale } = usePDFFileManager();
+  const { PDFFile, scale, setScale, isDownloading, setIsDownloading } =
+    usePDFFileManager();
   const { showToast } = useDialog();
-  const [isDownloading, setIsDownloading] = useState(false);
 
   const handlePDFDownload = async () => {
     if (!PDFFile || isDownloading) return;
@@ -52,6 +52,11 @@ const ViewerController = ({ canvasRefs }: ViewerControllerProps) => {
       link.download = "stamped.pdf";
       link.click();
       URL.revokeObjectURL(URL.createObjectURL(blob));
+
+      showToast({
+        type: "success",
+        message: "PDF 다운로드가 완료됐어요",
+      });
     } catch (error) {
       showToast({
         type: "error",

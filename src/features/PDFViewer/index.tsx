@@ -12,6 +12,7 @@ import { useActiveCanvasHandlers } from "@/hooks/PDFViewer/useActiveCanvasHandle
 import { useFabricCanvases } from "@/hooks/PDFViewer/useFabricCanvases.ts";
 import { useCanvasSize } from "@/hooks/PDFViewer/useCanvasSize.ts";
 import BinIcon from "@/assets/images/bin.svg";
+import LoadingIcon from "@/assets/images/loading.gif";
 
 const PDFViewer = () => {
   useCanvasSize();
@@ -26,6 +27,7 @@ const PDFViewer = () => {
     handleInitialize,
     canvasSize,
     scale,
+    isDownloading,
   } = usePDFFileManager();
 
   const canvasRef = useRef<HTMLDivElement>(null);
@@ -117,10 +119,31 @@ const PDFViewer = () => {
 
       <S.Viewer>
         <S.CanvasWrapper ref={canvasContainerRef}>
-          <S.Canvas ref={canvasRef} />
-          {isLoading && (
-            <S.CanvasLoadingOverlay>PDF 로딩 중...</S.CanvasLoadingOverlay>
+          {isDownloading && (
+            <S.CanvasLoadingOverlay>
+              <img
+                src={LoadingIcon}
+                alt="로딩 중 아이콘"
+                width={80}
+                height={80}
+              />
+              <span>PDF 다운로드 중</span>
+            </S.CanvasLoadingOverlay>
           )}
+
+          {isLoading && (
+            <S.CanvasLoadingOverlay>
+              <img
+                src={LoadingIcon}
+                alt="로딩 중 아이콘"
+                width={80}
+                height={80}
+              />
+              <span>PDF 로딩 중</span>
+            </S.CanvasLoadingOverlay>
+          )}
+
+          <S.Canvas ref={canvasRef} />
         </S.CanvasWrapper>
 
         {PDFFile && (

@@ -17,7 +17,7 @@ export const pdfFileToImages = async (
 
   const renderPageToImage = async (pageNumber: number): Promise<string> => {
     const page = await pdf.getPage(pageNumber);
-    const viewport = page.getViewport({ scale: 1.5 }); // 해상도 조절 가능
+    const viewport = page.getViewport({ scale: 2 });
 
     const canvas = document.createElement("canvas");
     const context = canvas.getContext("2d");

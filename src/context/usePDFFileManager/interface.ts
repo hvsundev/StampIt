@@ -29,4 +29,7 @@ export interface PDFContextType {
       FABRIC_CANVAS_HEIGHT: number;
     }>
   >;
+
+  isDownloading: boolean;
+  setIsDownloading: React.Dispatch<React.SetStateAction<boolean>>;
 }

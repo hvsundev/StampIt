@@ -92,11 +92,18 @@ export const MoveButton = styled.button`
 export const CanvasLoadingOverlay = styled.div`
   position: absolute;
   inset: 0;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.8);
   display: flex;
+  flex-direction: column;
+  gap: 10px;
   justify-content: center;
   align-items: center;
   font-weight: bold;
   font-size: 16px;
   z-index: 10;
+
+  span {
+    color: ${({ theme }) => theme.colors.base.black};
+    letter-spacing: -0.3px;
+  }
 `;
